@@ -1,0 +1,19 @@
+run:
+  deadline: 5m
+
+linters-settings:
+  govet:
+    check-shadowing: true
+  golint:
+    min-confidence: 0.8
+linters:
+  disable-all: false
+  enable:
+    - govet
+    - errcheck
+    - staticcheck
+    - unused
+    - gosimple
+    - misspell
+    - lll
+    - gofumpt

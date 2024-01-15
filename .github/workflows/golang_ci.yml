@@ -1,0 +1,89 @@
+# ワークフローの名前
+name: golang_ci
+
+# トリガーになる Github イベント
+on:
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - "backend/**"
+  workflow_dispatch:
+
+# 環境変数を設定
+env:
+  DOCKER_IMAGE_TAG: "backend"
+
+# デフォルトの作業ディレクトリ変更
+defaults:
+  run:
+    working-directory: backend
+
+# ジョブ定義
+jobs:
+  # ジョブ名
+  go_test:
+    runs-on: ubuntu-latest
+    steps:
+      # リポジトリからソースコードの取得
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+        # Go の実行環境 Setup
+      - name: Go Setup
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21
+
+      # テストの実行
+      - name: Run Test
+        run: go test -v ./... -coverprofile=coverage.out
+
+      # 実行結果を出力
+      - name: Run Octocov
+        uses: k1LoW/octocov-action@v0
+
+  go_lint:
+    runs-on: ubuntu-latest
+    # GITHUB_TOKEN への権限設定
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
+    steps:
+      # リポジトリからソースコードの取得
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Reveiwdogでgolangci-lintを実行
+      - name: Run golangci-lint with Reviewdog
+        uses: reviewdog/action-golangci-lint@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          go_version: 1.21
+          # reviewdog の動作モードの指定
+          reporter: github-pr-review
+          # Github Status へのレポートレベルの指定
+          level: warning
+          workdir: backend/
+          golangci_lint_flags: "--config=.golangci.yml"
+
+  go_build_check:
+    runs-on: ubuntu-latest
+    steps:
+      # リポジトリからソースコードの取得
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Dockerのコンテナイメージをビルド
+      - name: Docker Build
+        run: |
+          docker build -f Dockerfile -t ${{ env.DOCKER_IMAGE_TAG }} .
+
+      # Dockleで脆弱性検査を行う
+      - name: Run Dockle
+        uses: erzz/dockle-action@v1
+        with:
+          image: ${{ env.DOCKER_IMAGE_TAG }}
+          exit-code: 1
+          failure-threshold: fatal
