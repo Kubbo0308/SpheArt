@@ -1,0 +1,39 @@
+erDiagram
+    USER ||--o{ BOOKMARK : "has"
+    ARTICLE ||--o{ BOOKMARK : "is bookmarked"
+    ARTICLE ||--o{ ARTICLE_TAG : "is tagged"
+    TAG ||--o{ ARTICLE_TAG : "tags"
+
+    USER {
+        uint id PK
+        string name
+        string email
+        string password
+        string profile_image_url
+        string profile
+    }
+
+    ARTICLE {
+        uint id PK
+        string title
+        string content
+        datetime publish_date
+        string author
+        string source_url
+    }
+
+    BOOKMARK {
+        uint id PK
+        uint user_id FK
+        uint article_id FK
+    }
+
+    TAG {
+        uint id PK
+        string name
+    }
+
+    ARTICLE_TAG {
+        uint article_id FK
+        uint tag_id FK
+    }
