@@ -8,11 +8,11 @@ import (
 )
 
 type articlePersistence struct {
-	Db *gorm.DB
+	database *gorm.DB
 }
 
 func NewArticlePersistence(db *gorm.DB) repository.ArticleRepository {
-	return &articlePersistence{Db: db}
+	return &articlePersistence{database: db}
 }
 
 func (ap *articlePersistence) GetAllArticles(articles *[]model.Article) error {
