@@ -27,7 +27,7 @@ type User struct {
 }
 
 type QiitaResponse struct {
-	RenderdBody    string     `json:"renderd_body"`
+	RenderedBody   string     `json:"rendered_body"`
 	Body           string     `json:"body"`
 	Coediting      bool       `json:"coediting"`
 	CommentsCount  int        `json:"comments_count"`
