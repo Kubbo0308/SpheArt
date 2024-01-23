@@ -10,13 +10,17 @@ type ArticleUsecase interface {
 }
 
 type articleUsecase struct {
-	articleRepository repository.ArticleRepository
+	ar repository.ArticleRepository
 }
 
 func NewArticleUsecase(ar repository.ArticleRepository) ArticleUsecase {
-	return &articleUsecase{articleRepository: ar}
+	return &articleUsecase{ar}
 }
 
 func (au *articleUsecase) GetAllArticles() ([]model.Article, error) {
-	return []model.Article{}, nil
+	resp, err := au.ar.GetAllQiitaArticles()
+	if err != nil {
+		return []model.Article{}, err
+	}
+	return resp, nil
 }
