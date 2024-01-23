@@ -2,18 +2,28 @@ package model
 
 import "time"
 
-type Tag struct {
+type QiitaTag struct {
 	Name     string   `json:"name"`
 	Versions []string `json:"versions"`
 }
 
 type User struct {
-	Description     string `json:"description"`
-	FolloweesCount  int    `json:"followees_count"`
-	FollowersCount  int    `json:"followers_count"`
-	UserId          string `json:"id"`
-	Name            string `json:"name"`
-	ProfileImageUrl string `json:"profile_image_url"`
+	Description       string  `json:"description"`
+	FacebookId        string  `json:"facebook_id"`
+	FolloweesCount    int     `json:"followees_count"`
+	FollowersCount    int     `json:"followers_count"`
+	GithubLoginName   *string `json:"github_login_name"`
+	UserId            string  `json:"id"`
+	ItemsCount        int     `json:"items_count"`
+	LinkedinId        string  `json:"linkedin_id"`
+	Location          string  `json:"location"`
+	Name              string  `json:"name"`
+	Organization      string  `json:"organization"`
+	PermanentId       int     `json:"permanent_id"`
+	ProfileImageUrl   string  `json:"profile_image_url"`
+	TeamOnly          bool    `json:"team_only"`
+	TwitterScreenName *string `json:"twitter_screen_name"`
+	WebsiteUrl        string  `json:"website_url"`
 }
 
 type QiitaResponse struct {
@@ -27,7 +37,7 @@ type QiitaResponse struct {
 	Private        bool      `json:"private"`
 	ReactionsCount int       `json:"reactions_count"`
 	StocksCount    int       `json:"stocks_count"`
-	Tags           Tag       `json:"tags"`
+	Tags           QiitaTag  `json:"tags"`
 	Title          string    `json:"title"`
 	UpdatedAt      time.Time `json:"updated_at"`
 	Url            string    `json:"url"`
