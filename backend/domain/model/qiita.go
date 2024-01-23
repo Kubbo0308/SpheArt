@@ -27,19 +27,19 @@ type User struct {
 }
 
 type QiitaResponse struct {
-	RenderdBody    string    `json:"renderd_body"`
-	Body           string    `json:"body"`
-	Coediting      bool      `json:"coediting"`
-	CommentsCount  int       `json:"comments_count"`
-	CreatedAt      time.Time `json:"created_at"`
-	Id             string    `json:"id"`
-	LikesCount     int       `json:"likes_count"`
-	Private        bool      `json:"private"`
-	ReactionsCount int       `json:"reactions_count"`
-	StocksCount    int       `json:"stocks_count"`
-	Tags           QiitaTag  `json:"tags"`
-	Title          string    `json:"title"`
-	UpdatedAt      time.Time `json:"updated_at"`
-	Url            string    `json:"url"`
-	User           User      `json:"user"`
+	RenderdBody    string     `json:"renderd_body"`
+	Body           string     `json:"body"`
+	Coediting      bool       `json:"coediting"`
+	CommentsCount  int        `json:"comments_count"`
+	CreatedAt      time.Time  `json:"created_at"`
+	Id             string     `json:"id"`
+	LikesCount     int        `json:"likes_count"`
+	Private        bool       `json:"private"`
+	ReactionsCount int        `json:"reactions_count"`
+	StocksCount    int        `json:"stocks_count"`
+	Tags           []QiitaTag `json:"tags"`
+	Title          string     `json:"title"`
+	UpdatedAt      time.Time  `json:"updated_at"`
+	Url            string     `json:"url"`
+	User           User       `json:"user"`
 }
