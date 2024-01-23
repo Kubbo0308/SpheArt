@@ -11,22 +11,24 @@ import (
 )
 
 type articlePersistence struct {
-	database *gorm.DB
+	db *gorm.DB
 }
 
 func NewArticlePersistence(db *gorm.DB) repository.ArticleRepository {
-	return &articlePersistence{database: db}
+	return &articlePersistence{db}
 }
 
-func (ap *articlePersistence) GetAllQiitaArticles(articles *[]model.QiitaResponse) error {
-	err := getQiitaArticleFromAPI(*articles)
+func (ap *articlePersistence) GetAllQiitaArticles() ([]model.Article, error) {
+	var qiitaResp []model.QiitaResponse
+	err := GetQiitaArticleFromAPI(qiitaResp)
 	if err != nil {
-		return err
+		return []model.Article{}, err
 	}
-	return nil
+	articles := ConvertQiitaResponsesToArticles(qiitaResp)
+	return articles, nil
 }
 
-func getQiitaArticleFromAPI(jsonData []model.QiitaResponse) error {
+func GetQiitaArticleFromAPI(jsonData []model.QiitaResponse) error {
 	res, err := http.Get(`https://qiita.com/api/v2/items?page=1&per_page=100`)
 	if err != nil {
 		return err
@@ -44,4 +46,21 @@ func getQiitaArticleFromAPI(jsonData []model.QiitaResponse) error {
 		return err
 	}
 	return nil
+}
+
+func ConvertQiitaResponsesToArticles(qiitaResponses []model.QiitaResponse) []model.Article {
+	var articles []model.Article
+	for _, qiitaResp := range qiitaResponses {
+		articles = append(articles, model.Article{
+			Title:             qiitaResp.Title,
+			Url:               qiitaResp.Url,
+			CreatedAt:         qiitaResp.CreatedAt,
+			UpdatedAt:         qiitaResp.UpdatedAt,
+			PublisherId:       qiitaResp.User.UserId,
+			PublisherName:     qiitaResp.User.Name,
+			PublisherImageURL: qiitaResp.User.ProfileImageUrl,
+			Likes_count:       qiitaResp.LikesCount,
+		})
+	}
+	return articles
 }

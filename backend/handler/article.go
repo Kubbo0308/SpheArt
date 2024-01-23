@@ -11,11 +11,11 @@ type ArticleHandler interface {
 }
 
 type articleHandler struct {
-	articleUsecase usecase.ArticleUsecase
+	au usecase.ArticleUsecase
 }
 
 func NewArticleHandler(au usecase.ArticleUsecase) ArticleHandler {
-	return &articleHandler{articleUsecase: au}
+	return &articleHandler{au}
 }
 
 func (ah *articleHandler) GetAllArticles(ctx echo.Context) error {
