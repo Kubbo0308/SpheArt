@@ -4,6 +4,7 @@ import (
 	"backend/domain/model"
 	"backend/domain/repository"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -20,7 +21,8 @@ func NewArticlePersistence(db *gorm.DB) repository.ArticleRepository {
 
 func (ap *articlePersistence) GetAllQiitaArticles() ([]model.Article, error) {
 	var qiitaResp []model.QiitaResponse
-	err := GetQiitaArticleFromAPI(qiitaResp)
+	err := GetQiitaArticleFromAPI(&qiitaResp)
+	fmt.Println(qiitaResp)
 	if err != nil {
 		return []model.Article{}, err
 	}
@@ -28,7 +30,7 @@ func (ap *articlePersistence) GetAllQiitaArticles() ([]model.Article, error) {
 	return articles, nil
 }
 
-func GetQiitaArticleFromAPI(jsonData []model.QiitaResponse) error {
+func GetQiitaArticleFromAPI(jsonData *[]model.QiitaResponse) error {
 	res, err := http.Get(`https://qiita.com/api/v2/items?page=1&per_page=100`)
 	if err != nil {
 		return err
@@ -41,7 +43,8 @@ func GetQiitaArticleFromAPI(jsonData []model.QiitaResponse) error {
 	// 必ず閉じる。
 	defer res.Body.Close()
 	// リクエストを引数に受け取った構造体にマッピングする
-	err = json.Unmarshal(body, &jsonData)
+	err = json.Unmarshal(body, jsonData)
+	fmt.Println(jsonData)
 	if err != nil {
 		return err
 	}
