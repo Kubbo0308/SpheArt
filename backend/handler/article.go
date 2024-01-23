@@ -2,6 +2,7 @@ package handler
 
 import (
 	"backend/usecase"
+	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
@@ -19,5 +20,9 @@ func NewArticleHandler(au usecase.ArticleUsecase) ArticleHandler {
 }
 
 func (ah *articleHandler) GetAllArticles(ctx echo.Context) error {
-	return nil
+	resp, err := ah.au.GetAllArticles()
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, err.Error())
+	}
+	return ctx.JSON(http.StatusOK, resp)
 }
