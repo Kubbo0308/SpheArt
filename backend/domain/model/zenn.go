@@ -1,6 +1,9 @@
 package model
 
-import "time"
+import (
+	"strconv"
+	"time"
+)
 
 type ZennUser struct {
 	Id               int    `json:"id"`
@@ -12,30 +15,24 @@ type ZennUser struct {
 }
 
 type ZennResponse struct {
-	Id                  int      `json:"id"`
-	PostType            string   `json:"post_type"`
-	Title               string   `json:"title"`
-	Slug                string   `json:"slug"`
-	CommentsCount       int      `json:"comments_count"`
-	LikedCount          int      `json:"liked_count"`
-	BodyLettersCount    int      `json:"body_letters_count"`
-	ArticleType         string   `json:"article_type"`
-	Emoji               string   `json:"emoji"`
-	IsSuspendingPrivate bool     `json:"is_suspending_private"`
-	PublishedAt         string   `json:"published_at"`
-	BodyUpdatedAt       string   `json:"body_updated_at"`
-	SourceRepoUpdatedAt *string  `json:"source_repo_updated_at"`
-	Pinned              bool     `json:"pinned"`
-	Path                string   `json:"path"`
-	User                ZennUser `json:"user"`
+	Id                  int       `json:"id"`
+	PostType            string    `json:"post_type"`
+	Title               string    `json:"title"`
+	Slug                string    `json:"slug"`
+	CommentsCount       int       `json:"comments_count"`
+	LikedCount          int       `json:"liked_count"`
+	BodyLettersCount    int       `json:"body_letters_count"`
+	ArticleType         string    `json:"article_type"`
+	Emoji               string    `json:"emoji"`
+	IsSuspendingPrivate bool      `json:"is_suspending_private"`
+	PublishedAt         time.Time `json:"published_at"`
+	BodyUpdatedAt       time.Time `json:"body_updated_at"`
+	SourceRepoUpdatedAt *string   `json:"source_repo_updated_at"`
+	Pinned              bool      `json:"pinned"`
+	Path                string    `json:"path"`
+	User                ZennUser  `json:"user"`
 }
 
-func (zq ZennResponse) GetPublishedAt() time.Time {
-	parsedTime, _ := time.Parse("2006-01-02T15:04:05", zq.PublishedAt)
-	return parsedTime
-}
-
-func (zq ZennResponse) GetBodyUpdatedAt() time.Time {
-	parsedTime, _ := time.Parse("2006-01-02T15:04:05", zq.BodyUpdatedAt)
-	return parsedTime
+func (zp ZennResponse) GetUserId() string {
+	return strconv.Itoa(zp.User.Id)
 }
