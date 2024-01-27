@@ -10,15 +10,15 @@ type ArticleUsecase interface {
 }
 
 type articleUsecase struct {
-	ar repository.ArticleRepository
+	qr repository.QiitaRepository
 }
 
-func NewArticleUsecase(ar repository.ArticleRepository) ArticleUsecase {
-	return &articleUsecase{ar}
+func NewArticleUsecase(qr repository.QiitaRepository) ArticleUsecase {
+	return &articleUsecase{qr}
 }
 
 func (au *articleUsecase) GetAllArticles() ([]model.Article, error) {
-	resp, err := au.ar.GetAllQiitaArticles()
+	resp, err := au.qr.GetAllQiitaArticles()
 	if err != nil {
 		return []model.Article{}, err
 	}

@@ -2,6 +2,6 @@ package repository
 
 import "backend/domain/model"
 
-type ArticleRepository interface {
+type QiitaRepository interface {
 	GetAllQiitaArticles() ([]model.Article, error)
 }

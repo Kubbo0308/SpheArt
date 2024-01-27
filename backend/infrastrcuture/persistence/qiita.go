@@ -4,25 +4,23 @@ import (
 	"backend/domain/model"
 	"backend/domain/repository"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 
 	"gorm.io/gorm"
 )
 
-type articlePersistence struct {
+type qiitaPersistence struct {
 	db *gorm.DB
 }
 
-func NewArticlePersistence(db *gorm.DB) repository.ArticleRepository {
-	return &articlePersistence{db}
+func NewQiitaArticlePersistence(db *gorm.DB) repository.QiitaRepository {
+	return &qiitaPersistence{db}
 }
 
-func (ap *articlePersistence) GetAllQiitaArticles() ([]model.Article, error) {
+func (qp *qiitaPersistence) GetAllQiitaArticles() ([]model.Article, error) {
 	var qiitaResp []model.QiitaResponse
 	err := GetQiitaArticleFromAPI(&qiitaResp)
-	fmt.Println(qiitaResp)
 	if err != nil {
 		return []model.Article{}, err
 	}
@@ -44,7 +42,6 @@ func GetQiitaArticleFromAPI(jsonData *[]model.QiitaResponse) error {
 	defer res.Body.Close()
 	// リクエストを引数に受け取った構造体にマッピングする
 	err = json.Unmarshal(body, jsonData)
-	fmt.Println(jsonData)
 	if err != nil {
 		return err
 	}

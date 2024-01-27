@@ -9,7 +9,7 @@ import (
 )
 
 func Article(db *gorm.DB) handler.ArticleHandler {
-	ap := persistence.NewArticlePersistence(db)
+	ap := persistence.NewQiitaArticlePersistence(db)
 	au := usecase.NewArticleUsecase(ap)
 	ah := handler.NewArticleHandler(au)
 	return ah
