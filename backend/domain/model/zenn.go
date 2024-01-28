@@ -1,20 +1,19 @@
 package model
 
 import (
+	"fmt"
 	"strconv"
 	"time"
 )
 
 type ZennUser struct {
-	Id               int    `json:"id"`
-	Name             string `json:"name"`
-	DisplayName      string `json:"display_name"`
-	AvatarSmallUrl   string `json:"avatar_small_url"`
-	Pro              bool   `json:"pro"`
-	AvatarRegistered bool   `json:"avatar_registered"`
+	Id             int    `json:"id"`
+	UserName       string `json:"username"`
+	Name           string `json:"name"`
+	AvatarSmallUrl string `json:"avatar_small_url"`
 }
 
-type ZennResponse struct {
+type ZennArticles struct {
 	Id                  int       `json:"id"`
 	PostType            string    `json:"post_type"`
 	Title               string    `json:"title"`
@@ -33,6 +32,15 @@ type ZennResponse struct {
 	User                ZennUser  `json:"user"`
 }
 
-func (zp ZennResponse) GetUserId() string {
-	return strconv.Itoa(zp.User.Id)
+type ZennResponse struct {
+	Articles []ZennArticles `json:"articles"`
+	NextPage int            `json:"next_page"`
+}
+
+func (za ZennArticles) GetUserId() string {
+	return strconv.Itoa(za.User.Id)
+}
+
+func (za ZennArticles) GetUrl() string {
+	return fmt.Sprintf("https://zenn.dev/%v", za.Path)
 }

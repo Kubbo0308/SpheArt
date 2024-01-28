@@ -4,7 +4,6 @@ import (
 	"backend/domain/model"
 	"backend/domain/repository"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 
@@ -20,18 +19,17 @@ func NewZennArticlePersistence(db *gorm.DB) repository.ZennRepository {
 }
 
 func (zp *zennPersistence) GetAllZennArticles() ([]model.Article, error) {
-	var zennResp []model.ZennResponse
+	var zennResp model.ZennResponse
 	err := GetZennArticleFromAPI(&zennResp)
-	fmt.Println(zennResp)
 	if err != nil {
 		return []model.Article{}, err
 	}
-	articles := ConvertZennResponsesToArticles(zennResp)
+	articles := ConvertZennResponsesToArticles(zennResp.Articles)
 	return articles, nil
 }
 
-func GetZennArticleFromAPI(jsonData *[]model.ZennResponse) error {
-	res, err := http.Get(`https://zenn.dev/api/articles`)
+func GetZennArticleFromAPI(jsonData *model.ZennResponse) error {
+	res, err := http.Get(`https://zenn.dev/api/articles?page=1&per_page=100`)
 	if err != nil {
 		return err
 	}
@@ -44,19 +42,19 @@ func GetZennArticleFromAPI(jsonData *[]model.ZennResponse) error {
 	defer res.Body.Close()
 	// リクエストを引数に受け取った構造体にマッピングする
 	err = json.Unmarshal(body, jsonData)
-	fmt.Println(jsonData)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func ConvertZennResponsesToArticles(zennResponses []model.ZennResponse) []model.Article {
+func ConvertZennResponsesToArticles(zennResponses []model.ZennArticles) []model.Article {
 	var articles []model.Article
 	for _, zennResp := range zennResponses {
 		articles = append(articles, model.Article{
+			ID:                uint(zennResp.Id),
 			Title:             zennResp.Title,
-			Url:               zennResp.Path,
+			Url:               zennResp.GetUrl(),
 			CreatedAt:         zennResp.PublishedAt,
 			UpdatedAt:         zennResp.BodyUpdatedAt,
 			PublisherId:       zennResp.GetUserId(),
