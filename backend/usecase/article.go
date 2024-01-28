@@ -11,16 +11,22 @@ type ArticleUsecase interface {
 
 type articleUsecase struct {
 	qr repository.QiitaRepository
+	zr repository.ZennRepository
 }
 
-func NewArticleUsecase(qr repository.QiitaRepository) ArticleUsecase {
-	return &articleUsecase{qr}
+func NewArticleUsecase(qr repository.QiitaRepository, zr repository.ZennRepository) ArticleUsecase {
+	return &articleUsecase{qr, zr}
 }
 
 func (au *articleUsecase) GetAllArticles() ([]model.Article, error) {
-	resp, err := au.qr.GetAllQiitaArticles()
+	qiitaResp, err := au.qr.GetAllQiitaArticles()
 	if err != nil {
 		return []model.Article{}, err
 	}
-	return resp, nil
+	zennResp, err := au.zr.GetAllZennArticles()
+	if err != nil {
+		return []model.Article{}, err
+	}
+	articles := append(qiitaResp, zennResp...)
+	return articles, nil
 }
