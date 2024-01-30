@@ -60,7 +60,8 @@ func ConvertQiitaResponsesToArticles(qiitaResponses []model.QiitaResponse) []mod
 			PublisherId:       qiitaResp.User.UserId,
 			PublisherName:     qiitaResp.User.Name,
 			PublisherImageURL: qiitaResp.User.ProfileImageUrl,
-			Likes_count:       qiitaResp.LikesCount,
+			LikesCount:        qiitaResp.LikesCount,
+			QuoteSource:       "qiita",
 		})
 	}
 	return articles

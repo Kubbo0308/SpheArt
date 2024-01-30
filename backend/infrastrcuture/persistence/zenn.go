@@ -52,7 +52,7 @@ func ConvertZennResponsesToArticles(zennResponses []model.ZennArticles) []model.
 	var articles []model.Article
 	for _, zennResp := range zennResponses {
 		articles = append(articles, model.Article{
-			ID:                uint(zennResp.Id),
+			ID:                zennResp.GetId(),
 			Title:             zennResp.Title,
 			Url:               zennResp.GetUrl(),
 			CreatedAt:         zennResp.PublishedAt,
@@ -60,7 +60,8 @@ func ConvertZennResponsesToArticles(zennResponses []model.ZennArticles) []model.
 			PublisherId:       zennResp.GetUserId(),
 			PublisherName:     zennResp.User.Name,
 			PublisherImageURL: zennResp.User.AvatarSmallUrl,
-			Likes_count:       zennResp.LikedCount,
+			LikesCount:        zennResp.LikedCount,
+			QuoteSource:       "zenn",
 		})
 	}
 	return articles
