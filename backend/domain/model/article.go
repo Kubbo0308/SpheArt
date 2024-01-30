@@ -11,5 +11,6 @@ type Article struct {
 	PublisherId       string    `json:"publisher_id"`
 	PublisherName     string    `json:"publisher_name"`
 	PublisherImageURL string    `json:"publisher_image_url"`
-	Likes_count       int       `json:"likes_count"`
+	LikesCount        int       `json:"likes_count"`
+	QuoteSource       string    `json:"quote_source"`
 }

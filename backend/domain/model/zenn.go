@@ -1,6 +1,8 @@
 package model
 
 import (
+	"crypto/rand"
+	"encoding/binary"
 	"fmt"
 	"strconv"
 	"time"
@@ -43,4 +45,14 @@ func (za ZennArticles) GetUserId() string {
 
 func (za ZennArticles) GetUrl() string {
 	return fmt.Sprintf("https://zenn.dev/%v", za.Path)
+}
+
+func (za ZennArticles) GetId() uint {
+	var num uint32
+	// ランダムなバイトを生成
+	err := binary.Read(rand.Reader, binary.BigEndian, &num)
+	if err != nil {
+		return 0
+	}
+	return uint(num)
 }
