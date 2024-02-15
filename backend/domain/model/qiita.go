@@ -1,8 +1,6 @@
 package model
 
 import (
-	"crypto/rand"
-	"encoding/binary"
 	"time"
 )
 
@@ -46,14 +44,4 @@ type QiitaResponse struct {
 	UpdatedAt      time.Time  `json:"updated_at"`
 	Url            string     `json:"url"`
 	User           User       `json:"user"`
-}
-
-func (qr QiitaResponse) GetId() uint {
-	var num uint32
-	// ランダムなバイトを生成
-	err := binary.Read(rand.Reader, binary.BigEndian, &num)
-	if err != nil {
-		return 0
-	}
-	return uint(num)
 }

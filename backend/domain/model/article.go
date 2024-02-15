@@ -3,7 +3,7 @@ package model
 import "time"
 
 type Article struct {
-	ID                uint      `json:"id" gorm:"primaryKey"`
+	ID                string    `json:"id" gorm:"primaryKey"`
 	Title             string    `json:"title"`
 	Url               string    `json:"url"`
 	CreatedAt         time.Time `json:"created_at"`

@@ -52,7 +52,7 @@ func ConvertQiitaResponsesToArticles(qiitaResponses []model.QiitaResponse) []mod
 	var articles []model.Article
 	for _, qiitaResp := range qiitaResponses {
 		articles = append(articles, model.Article{
-			ID:                qiitaResp.GetId(),
+			ID:                qiitaResp.Id,
 			Title:             qiitaResp.Title,
 			Url:               qiitaResp.Url,
 			CreatedAt:         qiitaResp.CreatedAt,
