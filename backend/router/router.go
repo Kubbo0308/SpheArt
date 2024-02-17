@@ -1,7 +1,7 @@
 package router
 
 import (
-	"backend/handler"
+	"backend/interface/handler"
 	"net/http"
 	"os"
 

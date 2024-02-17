@@ -1,8 +1,8 @@
 package di
 
 import (
-	"backend/handler"
 	"backend/infrastrcuture/persistence"
+	"backend/interface/handler"
 	"backend/usecase"
 
 	"gorm.io/gorm"
