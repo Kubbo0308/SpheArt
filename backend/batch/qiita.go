@@ -1,31 +1,43 @@
-package persistence
+package batch
 
 import (
 	"backend/domain/model"
-	"backend/domain/repository"
 	"encoding/json"
+	"fmt"
 	"io"
+	"log"
 	"net/http"
 
 	"gorm.io/gorm"
 )
 
-type qiitaPersistence struct {
-	db *gorm.DB
-}
-
-func NewQiitaArticlePersistence(db *gorm.DB) repository.QiitaRepository {
-	return &qiitaPersistence{db}
-}
-
-func (qp *qiitaPersistence) GetAllQiitaArticles() ([]model.Article, error) {
+func RunQiitaAPIBatch(db *gorm.DB) {
+	// Qiita APIからデータを取得
 	var qiitaResp []model.QiitaResponse
 	err := GetQiitaArticleFromAPI(&qiitaResp)
 	if err != nil {
-		return []model.Article{}, err
+		log.Println("Failed to fetch Qiita items:", err)
 	}
+
 	articles := ConvertQiitaResponsesToArticles(qiitaResp)
-	return articles, nil
+
+	// データベースに保存
+	for _, item := range articles {
+		var existArticle model.Article
+
+		if err := db.Where("id = ?", item.ID).First(&existArticle).Error; err != nil {
+			// データベースに存在していないデータのみ保存
+			if err == gorm.ErrRecordNotFound {
+				if err = db.Create(&item).Error; err != nil {
+					fmt.Println("Failed to create article:", err)
+				}
+			} else {
+				fmt.Println("Error checking for existing article:", err)
+			}
+		} else {
+			fmt.Println("Article with ID", item.ID, "already exists")
+		}
+	}
 }
 
 func GetQiitaArticleFromAPI(jsonData *[]model.QiitaResponse) error {

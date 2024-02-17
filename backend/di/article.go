@@ -9,9 +9,8 @@ import (
 )
 
 func Article(db *gorm.DB) handler.ArticleHandler {
-	qp := persistence.NewQiitaArticlePersistence(db)
-	zp := persistence.NewZennArticlePersistence(db)
-	au := usecase.NewArticleUsecase(qp, zp)
+	ap := persistence.NewArticlePersistence(db)
+	au := usecase.NewArticleUsecase(ap)
 	ah := handler.NewArticleHandler(au)
 	return ah
 }
