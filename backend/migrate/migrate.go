@@ -11,5 +11,7 @@ func main() {
 	dbConn := database.NewDB()
 	defer fmt.Println("Successfully Migrated")
 	defer database.CloseDB(dbConn)
-	dbConn.AutoMigrate(&model.Article{})
+	if err := dbConn.AutoMigrate(&model.Article{}); err != nil {
+		return
+	}
 }

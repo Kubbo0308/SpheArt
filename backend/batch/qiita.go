@@ -15,7 +15,6 @@ func RunQiitaAPIBatch(db *gorm.DB) {
 	// Qiita APIからデータを取得
 	var qiitaResp []model.QiitaResponse
 	err := GetQiitaArticleFromAPI(&qiitaResp)
-
 	if err != nil {
 		log.Println("Failed to fetch Qiita items:", err)
 	}
@@ -29,7 +28,7 @@ func RunQiitaAPIBatch(db *gorm.DB) {
 		if err := db.Where("id = ?", item.ID).First(&existArticle).Error; err != nil {
 			// データベースに存在していないデータのみ保存
 			if err == gorm.ErrRecordNotFound {
-				if err := db.Create(&item).Error; err != nil {
+				if err = db.Create(&item).Error; err != nil {
 					fmt.Println("Failed to create article:", err)
 				}
 			} else {
