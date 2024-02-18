@@ -7,10 +7,11 @@ export const theme = extendTheme({
       secondary: "#fff8dc"
     },
     black: {
-      primary: "#333333"
+      primary: "#672a3f"
     },
     gray: {
-      primary: "#cccccc"
+      primary: "#cccccc",
+      placeholder: "#a9a9a9"
     },
     white: {
       primary: "#f4f5f7"
@@ -20,7 +21,7 @@ export const theme = extendTheme({
     global: {
       body: {
         bg: "yellow.secondary",
-        placeholder: "#A9A9A9"
+        placeholder: "gray.placeholder"
       },
       font: {
         color: "black.primary",
