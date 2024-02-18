@@ -19,7 +19,8 @@ export const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bg: "yellow.secondary"
+        bg: "yellow.secondary",
+        placeholder: "#A9A9A9"
       },
       font: {
         color: "black.primary",

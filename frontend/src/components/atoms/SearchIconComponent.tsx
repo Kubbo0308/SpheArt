@@ -1,8 +1,19 @@
+'use client'
+
 import { IsSearchAtom } from '@/states/IsSearchAtom'
-import { SearchIcon } from '@chakra-ui/icons'
+import { Image } from '@chakra-ui/react'
 import { useRecoilState } from 'recoil'
 
 export const SearchIconComponent = () => {
   const [isSearch, setIsSearch] = useRecoilState(IsSearchAtom)
-  return <SearchIcon onClick={() => setIsSearch(!isSearch)} />
+  return (
+    <Image
+      src="/icons/magnifier.svg"
+      alt=""
+      h="60%"
+      my="auto"
+      onClick={() => setIsSearch(!isSearch)}
+      _hover={{ cursor: 'pointer' }}
+    />
+  )
 }

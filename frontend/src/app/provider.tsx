@@ -1,7 +1,7 @@
 'use client'
 
-import { theme } from '../../theme/theme'
 import { RecoilRoot } from 'recoil'
+import { theme } from '../../theme/theme'
 import { ChakraProvider } from '@chakra-ui/provider'
 
 export function Provider({ children }: { children: React.ReactNode }) {
