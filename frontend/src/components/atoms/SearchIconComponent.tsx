@@ -8,7 +8,7 @@ export const SearchIconComponent = () => {
   const [isSearch, setIsSearch] = useRecoilState(IsSearchAtom)
   return (
     <Image
-      src="/icons/magnifier.svg"
+      src="/icons/magnifier/magnifier.svg"
       alt=""
       h="60%"
       my="auto"
