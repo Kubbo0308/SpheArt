@@ -9,7 +9,7 @@ type QiitaTag struct {
 	Versions []string `json:"versions"`
 }
 
-type User struct {
+type QiitaUser struct {
 	Description       string  `json:"description"`
 	FacebookId        string  `json:"facebook_id"`
 	FolloweesCount    int     `json:"followees_count"`
@@ -43,5 +43,5 @@ type QiitaResponse struct {
 	Title          string     `json:"title"`
 	UpdatedAt      time.Time  `json:"updated_at"`
 	Url            string     `json:"url"`
-	User           User       `json:"user"`
+	User           QiitaUser  `json:"user"`
 }
