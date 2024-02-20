@@ -17,6 +17,7 @@ export const SearchInput = () => {
     e.preventDefault()
     router.push(`/search?title=${value}`)
     setIsSearch(false)
+    setValue('')
   }
 
   return (

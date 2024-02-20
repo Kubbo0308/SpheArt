@@ -12,7 +12,7 @@ export default async function Search({
 
   const articles = await searchArticlesInTitle(ensureString(searchTitle))
   return (
-    <Container maxW="container.sm">
+    <Container maxW="container.md" py="5%">
       <ArticleList articles={articles} />
     </Container>
   )
