@@ -21,7 +21,7 @@ type ArticleListProps = {
 export const ArticleList = (props: ArticleListProps) => {
   const { articles } = props
   return (
-    <List spacing={3} mt="2%">
+    <List spacing={3}>
       {articles.map((article: ArticleProps) => (
         <div key={article.id}>
           <ArticleListItem article={article} />

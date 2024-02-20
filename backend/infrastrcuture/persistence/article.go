@@ -23,3 +23,12 @@ func (ap *articlePersistence) GetAllArticles() ([]model.Article, error) {
 	}
 	return articles, nil
 }
+
+func (ap *articlePersistence) SearchInArticleTitle(searchTitle string) ([]model.Article, error) {
+	articles := []model.Article{}
+	res := ap.db.Where("title LIKE ?", searchTitle).Find(&articles)
+	if res.Error != nil {
+		return []model.Article{}, res.Error
+	}
+	return articles, nil
+}

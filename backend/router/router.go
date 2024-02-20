@@ -30,5 +30,6 @@ func NewRouter(ah handler.ArticleHandler) *echo.Echo {
 	}))
 
 	e.GET("/articles", ah.GetAllArticles)
+	e.GET("/articles/search", ah.SearchInArticleTitle)
 	return e
 }
