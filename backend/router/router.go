@@ -9,7 +9,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func NewRouter(ah handler.ArticleHandler) *echo.Echo {
+func NewRouter(ah handler.ArticleHandler, uh handler.UserHandler) *echo.Echo {
 	e := echo.New()
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"http://localhost:3000", os.Getenv("FE_URL")},
@@ -31,5 +31,9 @@ func NewRouter(ah handler.ArticleHandler) *echo.Echo {
 
 	e.GET("/articles", ah.GetAllArticles)
 	e.GET("/articles/search", ah.SearchInArticleTitle)
+	e.POST("/signup", uh.SignUp)
+	e.POST("/signin", uh.SignIn)
+	e.POST("/signout", uh.SignOut)
+	e.GET("/csrf", uh.CsrfToken)
 	return e
 }
