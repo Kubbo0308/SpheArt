@@ -37,6 +37,6 @@ func main() {
 
 	fmt.Println("Finish!")
 
-	e := router.NewRouter(di.Article(db))
+	e := router.NewRouter(di.Article(db), di.User(db))
 	e.Logger.Fatal(e.Start(":8080"))
 }
