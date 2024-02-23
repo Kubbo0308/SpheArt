@@ -14,6 +14,7 @@ type UserHandler interface {
 	SignUp(ctx echo.Context) error
 	SignIn(ctx echo.Context) error
 	SignOut(ctx echo.Context) error
+	CsrfToken(ctx echo.Context) error
 }
 
 type userHandler struct {
@@ -70,4 +71,11 @@ func (uh *userHandler) SignOut(ctx echo.Context) error {
 	cookie.SameSite = http.SameSiteNoneMode
 	ctx.SetCookie(cookie)
 	return ctx.NoContent(http.StatusOK)
+}
+
+func (uh *userHandler) CsrfToken(ctx echo.Context) error {
+	token := ctx.Get("csrf").(string)
+	return ctx.JSON(http.StatusOK, echo.Map{
+		"csrf_token": token,
+	})
 }
