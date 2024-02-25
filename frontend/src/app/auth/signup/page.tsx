@@ -1,7 +1,7 @@
 'use client'
 
 import { AuthFormSchema, AuthFormType } from '@/schemas/AuthFormSchema'
-import { useForm, FormProvider } from 'react-hook-form'
+import { useForm, FormProvider, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Container } from '@chakra-ui/react'
 import { FormInput } from '@/components/atoms/FormInput'
@@ -22,8 +22,40 @@ export default function SignUp() {
   const {
     register,
     formState: { errors },
-    handleSubmit
+    handleSubmit,
+    getFieldState,
+    control
   } = methods
+
+  const watchEmail = useWatch({
+    control,
+    name: 'email'
+  })
+
+  const watchPassword = useWatch({
+    control,
+    name: 'password'
+  })
+
+  const watchConfirmPassword = useWatch({
+    control,
+    name: 'confirmPassword'
+  })
+
+  // 必須入力の項目が全て正しく入力されているかチェック
+  const isDisabled = (): boolean => {
+    let isDisabled = false
+    if (getFieldState('email').invalid || !watchEmail) {
+      isDisabled = true
+    }
+    if (getFieldState('password').invalid || !watchPassword) {
+      isDisabled = true
+    }
+    if (getFieldState('confirmPassword').invalid || !watchConfirmPassword) {
+      isDisabled = true
+    }
+    return isDisabled
+  }
 
   const onSubmit = async (params: UserInfo) => {
     console.log(params)
@@ -57,7 +89,9 @@ export default function SignUp() {
             required={true}
             errMessage={errors.confirmPassword?.message}
           />
-          <Button type="submit">新規登録</Button>
+          <Button type="submit" isDisabled={isDisabled()}>
+            新規登録
+          </Button>
         </form>
       </FormProvider>
     </Container>
