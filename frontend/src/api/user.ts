@@ -1,7 +1,7 @@
 import { CONST } from "@/const"
 import { fetchCsrfToken } from "./csrf"
 
-interface UserInfo {
+export interface UserInfo {
   email: string
   password: string
 }
