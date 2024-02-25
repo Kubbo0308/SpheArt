@@ -1,8 +1,9 @@
-import { Flex, Image } from '@chakra-ui/react'
+import { Button, Flex, Image } from '@chakra-ui/react'
 import { SearchInput } from '../atoms/SearchInput'
 import { SearchIconComponent } from '../atoms/SearchIconComponent'
 import Link from 'next/link'
 import { CONST } from '@/const'
+import { PrimaryButton } from '../atoms/PrimaryButton'
 
 export const Header = () => {
   return (
@@ -13,13 +14,16 @@ export const Header = () => {
             <Image
               src="/icons/techpulse_transparent_big_name.png"
               alt="#"
-              w="auto"
+              w="100%"
               h="100%"
               objectFit="cover"
               _hover={{ cursor: 'pointer', opacity: '0.5' }}
             />
           </Link>
-          <SearchIconComponent />
+          <Flex w="100%" h="100%" justifyContent="flex-end" gap="3%">
+            <SearchIconComponent />
+            <PrimaryButton title="ログイン" url={CONST.SIGN_IN} />
+          </Flex>
         </Flex>
       </Flex>
       <SearchInput />
