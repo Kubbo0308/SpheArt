@@ -22,7 +22,7 @@ export const Header = () => {
           </Link>
           <Flex w="100%" h="100%" justifyContent="flex-end" gap="3%">
             <SearchIconComponent />
-            <PrimaryButton title="ログイン" url={CONST.SIGN_IN} />
+            <PrimaryButton title="ログイン" url={`${CONST.AUTH}${CONST.SIGN_IN}`} />
           </Flex>
         </Flex>
       </Flex>
