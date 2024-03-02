@@ -1,13 +1,13 @@
 import { Button, Link } from '@chakra-ui/react'
 
-interface PrimaryButtonProps {
+interface LinkButtonProps {
   title: string
   url: string
   bgColor?: string
   color?: string
 }
 
-export const PrimaryButton = (props: PrimaryButtonProps) => {
+export const LinkButton = (props: LinkButtonProps) => {
   const { title, url, bgColor = 'black.primary', color = 'white.primary' } = props
   return (
     <Button bg={bgColor} color={color}>

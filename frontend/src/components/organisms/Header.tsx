@@ -3,7 +3,7 @@ import { SearchInput } from '../atoms/SearchInput'
 import { SearchIconComponent } from '../atoms/SearchIconComponent'
 import Link from 'next/link'
 import { CONST } from '@/const'
-import { PrimaryButton } from '../atoms/PrimaryButton'
+import { LinkButton } from '../atoms/LinkButton'
 
 export const Header = () => {
   return (
@@ -22,7 +22,7 @@ export const Header = () => {
           </Link>
           <Flex w="100%" h="100%" justifyContent="flex-end" gap="3%">
             <SearchIconComponent />
-            <PrimaryButton title="ログイン" url={`${CONST.AUTH}${CONST.SIGN_IN}`} />
+            <LinkButton title="ログイン" url={`${CONST.AUTH}${CONST.SIGN_IN}`} />
           </Flex>
         </Flex>
       </Flex>
