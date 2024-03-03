@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const AuthFormSchema = z
+export const SignUpFormSchema = z
   .object({
     email: z
       .string()
@@ -26,4 +26,4 @@ export const AuthFormSchema = z
     }
   })
 
-export type AuthFormType = z.infer<typeof AuthFormSchema>
+export type SignUpFormType = z.infer<typeof SignUpFormSchema>

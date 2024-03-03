@@ -1,6 +1,6 @@
 'use client'
 
-import { AuthFormSchema, AuthFormType } from '@/schemas/AuthFormSchema'
+import { SignUpFormSchema, SignUpFormType } from '@/schemas/SignUpFormSchema'
 import { useForm, FormProvider, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Container } from '@chakra-ui/react'
@@ -15,10 +15,10 @@ interface FormData {
 }
 
 export const SignUpPage = () => {
-  const methods = useForm<AuthFormType>({
+  const methods = useForm<SignUpFormType>({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    resolver: zodResolver(AuthFormSchema),
+    resolver: zodResolver(SignUpFormSchema),
     defaultValues: {
       email: '',
       password: '',
