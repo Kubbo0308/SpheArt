@@ -51,7 +51,7 @@ func (uh *userHandler) SignIn(ctx echo.Context) error {
 	cookie.Expires = time.Now().Add(3 * time.Hour)
 	cookie.Path = "/"
 	cookie.Domain = os.Getenv("API_DOMAIN")
-	// cookie.Secure = true
+	cookie.Secure = true
 	cookie.HttpOnly = true
 	cookie.SameSite = http.SameSiteNoneMode
 	ctx.SetCookie(cookie)
@@ -65,7 +65,7 @@ func (uh *userHandler) SignOut(ctx echo.Context) error {
 	cookie.Expires = time.Now()
 	cookie.Path = "/"
 	cookie.Domain = os.Getenv("API_DOMAIN")
-	// cookie.Secure = true
+	cookie.Secure = true
 	cookie.HttpOnly = true
 	cookie.SameSite = http.SameSiteNoneMode
 	ctx.SetCookie(cookie)
