@@ -5,9 +5,11 @@ import Link from 'next/link'
 import { CONST } from '@/const'
 import { LinkButton } from '../atoms/LinkButton'
 import { getCookies } from 'next-client-cookies/server'
+import { RemoveCookieButton } from '../atoms/RemoveCookieButton'
 
 export const Header = () => {
   const cookies = getCookies()
+
   return (
     <>
       <Flex bg="yellow.primary" w="100%" h="7vh" alignItems="center">
@@ -25,7 +27,7 @@ export const Header = () => {
           <Flex w="100%" h="100%" justifyContent="flex-end" gap="3%">
             <SearchIconComponent />
             {cookies.get('token') !== undefined ? (
-              <LinkButton title="ログアウト" url={`${CONST.AUTH}${CONST.SIGN_OUT}`} />
+              <RemoveCookieButton title="ログアウト" url={`${CONST.TOP}`} />
             ) : (
               <LinkButton title="ログイン" url={`${CONST.AUTH}${CONST.SIGN_IN}`} />
             )}

@@ -1,4 +1,4 @@
-export function ensureString(input: string | string[] | undefined): string {
+export function EnsureString(input: string | string[] | undefined): string {
   if (typeof input === 'string') {
     return input;
   } else if (Array.isArray(input)) {

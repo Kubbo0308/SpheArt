@@ -63,7 +63,7 @@ export const SignInPage = () => {
     const { data, status } = await SignIn(email, password)
     switch (status) {
       case STATUS_CODE.OK:
-        // 新規登録成功時
+        // ログイン成功時
         cookies.set('token', data)
         router.push(CONST.TOP)
         break // 成功時の処理が完了したらbreakを忘れずに
