@@ -1,28 +1,30 @@
 'use client'
 
-import { SignUpFormSchema, SignUpFormType } from '@/schemas/SignUpFormSchema'
 import { useForm, FormProvider, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Container } from '@chakra-ui/react'
 import { FormInput } from '@/components/atoms/FormInput'
-import { SignUp } from '@/api/user'
-import { STATUS_CODE } from '@/const'
+import { SignIn } from '@/api/user'
+import { CONST, STATUS_CODE } from '@/const'
+import { SignInFormSchema, SignInFormType } from '@/schemas/SignInFormSchema'
+import { useCookies } from 'next-client-cookies'
+import { useRouter } from 'next/navigation'
 
 interface FormData {
   email: string
   password: string
-  confirmPassword: string
 }
 
-export const SignUpPage = () => {
-  const methods = useForm<SignUpFormType>({
+export const SignInPage = () => {
+  const cookies = useCookies()
+  const router = useRouter()
+  const methods = useForm<SignInFormType>({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    resolver: zodResolver(SignUpFormSchema),
+    resolver: zodResolver(SignInFormSchema),
     defaultValues: {
       email: '',
-      password: '',
-      confirmPassword: ''
+      password: ''
     }
   })
 
@@ -44,11 +46,6 @@ export const SignUpPage = () => {
     name: 'password'
   })
 
-  const watchConfirmPassword = useWatch({
-    control,
-    name: 'confirmPassword'
-  })
-
   // 必須入力の項目が全て正しく入力されているかチェック
   const isDisabled = (): boolean => {
     let isDisabled = false
@@ -58,22 +55,20 @@ export const SignUpPage = () => {
     if (getFieldState('password').invalid || !watchPassword) {
       isDisabled = true
     }
-    if (getFieldState('confirmPassword').invalid || !watchConfirmPassword) {
-      isDisabled = true
-    }
     return isDisabled
   }
 
   const onSubmit = async (params: FormData) => {
     const { email, password } = params
-    const { status, data } = await SignUp(email, password)
+    const { data, status } = await SignIn(email, password)
     switch (status) {
-      case STATUS_CODE.CREATED:
-        // 新規登録成功時
-        alert('成功！')
+      case STATUS_CODE.OK:
+        // ログイン成功時
+        cookies.set('token', data)
+        router.push(CONST.TOP)
         break // 成功時の処理が完了したらbreakを忘れずに
       default:
-        alert('失敗！')
+        alert(status)
         break
     }
   }
@@ -98,16 +93,8 @@ export const SignUpPage = () => {
             required={true}
             errMessage={errors.password?.message}
           />
-          <FormInput
-            type="password"
-            register={register('confirmPassword')}
-            label="確認用パスワード"
-            placeholder="パスワードを再入力"
-            required={true}
-            errMessage={errors.confirmPassword?.message}
-          />
           <Button type="submit" isDisabled={isDisabled()}>
-            新規登録
+            ログイン
           </Button>
         </form>
       </FormProvider>

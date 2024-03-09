@@ -5,12 +5,13 @@ interface LinkButtonProps {
   url: string
   bgColor?: string
   color?: string
+  onClick?: () => void
 }
 
 export const LinkButton = (props: LinkButtonProps) => {
-  const { title, url, bgColor = 'black.primary', color = 'white.primary' } = props
+  const { title, url, bgColor = 'black.primary', color = 'white.primary', onClick } = props
   return (
-    <Button bg={bgColor} color={color}>
+    <Button bg={bgColor} color={color} onClick={onClick}>
       <Link href={url}>{title}</Link>
     </Button>
   )
