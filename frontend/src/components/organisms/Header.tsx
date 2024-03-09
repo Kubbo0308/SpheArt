@@ -1,11 +1,13 @@
-import { Button, Flex, Image } from '@chakra-ui/react'
+import { Flex, Image } from '@chakra-ui/react'
 import { SearchInput } from '../atoms/SearchInput'
 import { SearchIconComponent } from '../atoms/SearchIconComponent'
 import Link from 'next/link'
 import { CONST } from '@/const'
 import { LinkButton } from '../atoms/LinkButton'
+import { getCookies } from 'next-client-cookies/server'
 
 export const Header = () => {
+  const cookies = getCookies()
   return (
     <>
       <Flex bg="yellow.primary" w="100%" h="7vh" alignItems="center">
@@ -22,7 +24,11 @@ export const Header = () => {
           </Link>
           <Flex w="100%" h="100%" justifyContent="flex-end" gap="3%">
             <SearchIconComponent />
-            <LinkButton title="ログイン" url={`${CONST.AUTH}${CONST.SIGN_IN}`} />
+            {cookies.get('token') !== undefined ? (
+              <LinkButton title="ログアウト" url={`${CONST.AUTH}${CONST.SIGN_OUT}`} />
+            ) : (
+              <LinkButton title="ログイン" url={`${CONST.AUTH}${CONST.SIGN_IN}`} />
+            )}
           </Flex>
         </Flex>
       </Flex>
