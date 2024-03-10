@@ -8,6 +8,7 @@ import (
 type BookmarkUsecase interface {
 	AllBookmark(userId uint) ([]model.Bookmark, error)
 	PostBookmark(userId uint, articleId uint) error
+	DeleteBookmark(userId uint, articleId uint) error
 }
 
 type bookmarkUsecase struct {
@@ -23,5 +24,9 @@ func (bu *bookmarkUsecase) AllBookmark(userId uint) ([]model.Bookmark, error) {
 }
 
 func (bu *bookmarkUsecase) PostBookmark(userId uint, articleId uint) error {
+	return nil
+}
+
+func (bu *bookmarkUsecase) DeleteBookmark(userId uint, articleId uint) error {
 	return nil
 }

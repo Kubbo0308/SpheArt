@@ -9,6 +9,7 @@ import (
 type BookmarkHandler interface {
 	AllBookmark(ctx echo.Context) error
 	PostBookmark(ctx echo.Context) error
+	DeleteBookmark(ctx echo.Context) error
 }
 
 type bookmarkHandler struct {
@@ -24,5 +25,9 @@ func (bh *bookmarkHandler) AllBookmark(ctx echo.Context) error {
 }
 
 func (bh *bookmarkHandler) PostBookmark(ctx echo.Context) error {
+	return nil
+}
+
+func (bh *bookmarkHandler) DeleteBookmark(ctx echo.Context) error {
 	return nil
 }
