@@ -20,13 +20,25 @@ func NewBookmarkUsecase(br repository.BookmarkRepository) BookmarkUsecase {
 }
 
 func (bu *bookmarkUsecase) AllBookmark(userId uint) ([]model.Bookmark, error) {
-	return []model.Bookmark{}, nil
+	bookmarks, err := bu.br.AllBookmarkByUserId(userId)
+	if err != nil {
+		return []model.Bookmark{}, err
+	}
+	return bookmarks, nil
 }
 
 func (bu *bookmarkUsecase) PostBookmark(userId uint, articleId uint) error {
+	err := bu.br.CreateBookmark(userId, articleId)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
 func (bu *bookmarkUsecase) DeleteBookmark(userId uint, articleId uint) error {
+	err := bu.br.DeleteBookmark(userId, articleId)
+	if err != nil {
+		return err
+	}
 	return nil
 }
