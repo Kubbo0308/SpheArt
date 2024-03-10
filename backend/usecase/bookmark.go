@@ -7,8 +7,8 @@ import (
 
 type BookmarkUsecase interface {
 	AllBookmark(userId uint) ([]model.Bookmark, error)
-	PostBookmark(userId uint, articleId uint) error
-	DeleteBookmark(userId uint, articleId uint) error
+	PostBookmark(userId uint, articleId uint) (model.Bookmark, error)
+	DeleteBookmark(userId uint, articleId uint) (model.Bookmark, error)
 }
 
 type bookmarkUsecase struct {
@@ -27,18 +27,26 @@ func (bu *bookmarkUsecase) AllBookmark(userId uint) ([]model.Bookmark, error) {
 	return bookmarks, nil
 }
 
-func (bu *bookmarkUsecase) PostBookmark(userId uint, articleId uint) error {
-	err := bu.br.CreateBookmark(userId, articleId)
-	if err != nil {
-		return err
+func (bu *bookmarkUsecase) PostBookmark(userId uint, articleId uint) (model.Bookmark, error) {
+	newBookmark := model.Bookmark{
+		UserID:    userId,
+		ArticleID: articleId,
 	}
-	return nil
+	err := bu.br.CreateBookmark(&newBookmark)
+	if err != nil {
+		return model.Bookmark{}, err
+	}
+	return newBookmark, nil
 }
 
-func (bu *bookmarkUsecase) DeleteBookmark(userId uint, articleId uint) error {
-	err := bu.br.DeleteBookmark(userId, articleId)
-	if err != nil {
-		return err
+func (bu *bookmarkUsecase) DeleteBookmark(userId uint, articleId uint) (model.Bookmark, error) {
+	deleteBookmark := model.Bookmark{
+		UserID:    userId,
+		ArticleID: articleId,
 	}
-	return nil
+	err := bu.br.DeleteBookmark(&deleteBookmark)
+	if err != nil {
+		return model.Bookmark{}, err
+	}
+	return deleteBookmark, nil
 }

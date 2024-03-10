@@ -25,19 +25,15 @@ func (bp *bookmarkPersistence) AllBookmarkByUserId(userId uint) ([]model.Bookmar
 	return bookmarks, nil
 }
 
-func (bp *bookmarkPersistence) CreateBookmark(userId uint, articleId uint) error {
-	bookmark := model.Bookmark{
-		UserID:    userId,
-		ArticleID: articleId,
-	}
-	if err := bp.db.Create(&bookmark).Error; err != nil {
+func (bp *bookmarkPersistence) CreateBookmark(bookmark *model.Bookmark) error {
+	if err := bp.db.Create(bookmark).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
-func (bp *bookmarkPersistence) DeleteBookmark(userId uint, articleId uint) error {
-	res := bp.db.Where("user_id = ? AND article_id = ?", userId, articleId).Delete(&model.Bookmark{})
+func (bp *bookmarkPersistence) DeleteBookmark(bookmark *model.Bookmark) error {
+	res := bp.db.Where("user_id = ? AND article_id = ?", bookmark.UserID, bookmark.ArticleID).Delete(&model.Bookmark{})
 	if res.Error != nil {
 		return res.Error
 	}
