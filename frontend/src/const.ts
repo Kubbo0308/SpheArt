@@ -7,7 +7,8 @@ export const CONST = {
   AUTH: "/auth",
   SIGN_UP: "/signup",
   SIGN_IN: "/signin",
-  SIGN_OUT: "/signout"
+  SIGN_OUT: "/signout",
+  BOOKMARK: "/bookmark"
 }
 
 export const STATUS_CODE = {
