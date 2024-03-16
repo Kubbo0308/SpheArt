@@ -36,8 +36,8 @@ func NewRouter(ah handler.ArticleHandler, uh handler.UserHandler, bh handler.Boo
 		// Clientから送られてくるjwtトークンの置き場所を指定
 		TokenLookup: "cookie:token",
 	}))
-	b.GET("/:userId", bh.AllBookmark)
-	b.POST("/:userId/:articleId", bh.PostBookmark)
-	b.DELETE("/:userId/:articleId", bh.DeleteBookmark)
+	b.GET("/", bh.AllBookmark)
+	b.POST("/:articleId", bh.PostBookmark)
+	b.DELETE("/:articleId", bh.DeleteBookmark)
 	return e
 }
