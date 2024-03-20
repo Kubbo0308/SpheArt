@@ -1,4 +1,10 @@
+'use client'
+
+import { DeleteBookmark, PostBookmark } from '@/api/bookmark'
+import { STATUS_CODE } from '@/const'
+import { AttachmentIcon } from '@chakra-ui/icons'
 import { ListItem, Text, Box, Flex, Spacer, Image, Badge, Link, Button } from '@chakra-ui/react'
+import { useState } from 'react'
 
 type ArticleProps = {
   id: number
@@ -15,9 +21,39 @@ type ArticleProps = {
 
 type ArticleListItemProps = {
   article: ArticleProps
+  token: string | undefined
 }
 
-export const ArticleListItem = ({ article }: ArticleListItemProps) => {
+export const ArticleListItem = (props: ArticleListItemProps) => {
+  const { article, token } = props
+  const isLogin = token !== undefined
+  const [isBookmark, setIsBookmark] = useState(false)
+
+  const registerBookmark = async (articleId: string) => {
+    const { data, status } = await PostBookmark(articleId)
+    switch (status) {
+      case STATUS_CODE.CREATED:
+        setIsBookmark(true)
+        console.log(data.toString())
+        console.log('create')
+        break
+      default:
+        console.log(status)
+        break
+    }
+  }
+
+  const deleteBookmark = async (articleId: string) => {
+    const { data, status } = await DeleteBookmark(articleId)
+    switch (status) {
+      case STATUS_CODE.OK:
+        setIsBookmark(false)
+        break
+      default:
+        break
+    }
+  }
+
   // SVGのいいねアイコン
   const LikeIcon = () => (
     <svg
@@ -69,6 +105,17 @@ export const ArticleListItem = ({ article }: ArticleListItemProps) => {
           <Button variant="ghost" colorScheme="red" size="sm" leftIcon={<LikeIcon />}>
             {article.likes_count}
           </Button>
+          {isLogin && (
+            <AttachmentIcon
+              _hover={{ cursor: 'pointer' }}
+              color={isBookmark ? 'yellow.primary' : 'gray.placeholder'}
+              onClick={() => {
+                isBookmark ? deleteBookmark(String(article.id)) : registerBookmark(String(article.id))
+              }}
+            >
+              ブックマーク
+            </AttachmentIcon>
+          )}
         </Box>
       </Flex>
     </ListItem>
