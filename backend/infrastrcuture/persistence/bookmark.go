@@ -3,7 +3,7 @@ package persistence
 import (
 	"backend/domain/model"
 	"backend/domain/repository"
-	"fmt"
+	"errors"
 
 	"gorm.io/gorm"
 )
@@ -25,22 +25,23 @@ func (bp *bookmarkPersistence) AllBookmarkByUserId(userId uint) ([]model.Bookmar
 	return bookmarks, nil
 }
 
-func (bp *bookmarkPersistence) CreateBookmark(bookmark *model.Bookmark) error {
-	if err := bp.db.Create(bookmark).Error; err != nil {
-		return err
-	}
-	return nil
-}
-
-func (bp *bookmarkPersistence) DeleteBookmark(bookmark *model.Bookmark) error {
-	res := bp.db.Where("user_id = ? AND article_id = ?", bookmark.UserID, bookmark.ArticleID).Delete(&model.Bookmark{})
-	if res.Error != nil {
-		return res.Error
-	}
-
-	// データが見つからない場合
-	if res.RowsAffected < 1 {
-		return fmt.Errorf("object does not exist")
+func (bp *bookmarkPersistence) PostBookmark(bookmark *model.Bookmark) error {
+	// ブックマークがすでに存在するかを確認
+	existingBookmark := model.Bookmark{}
+	if err := bp.db.Where("user_id = ? AND article_id = ?", bookmark.UserID, bookmark.ArticleID).First(&existingBookmark).Error; err != nil {
+		if !errors.Is(err, gorm.ErrRecordNotFound) {
+			// 予期しないエラーが発生した場合
+			return err
+		}
+		// レコードが存在しない場合はブックマークを作成
+		if err := bp.db.Create(bookmark).Error; err != nil {
+			return err
+		}
+	} else {
+		// レコードが存在する場合はブックマークを削除
+		if err := bp.db.Delete(&existingBookmark).Error; err != nil {
+			return err
+		}
 	}
 	return nil
 }

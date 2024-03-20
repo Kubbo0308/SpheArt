@@ -38,6 +38,5 @@ func NewRouter(ah handler.ArticleHandler, uh handler.UserHandler, bh handler.Boo
 	}))
 	b.GET("/", bh.AllBookmark)
 	b.POST("/:articleId", bh.PostBookmark)
-	b.DELETE("/:articleId", bh.DeleteBookmark)
 	return e
 }

@@ -11,7 +11,6 @@ import (
 type BookmarkHandler interface {
 	AllBookmark(ctx echo.Context) error
 	PostBookmark(ctx echo.Context) error
-	DeleteBookmark(ctx echo.Context) error
 }
 
 type bookmarkHandler struct {
@@ -42,20 +41,6 @@ func (bh *bookmarkHandler) PostBookmark(ctx echo.Context) error {
 	articleId := ctx.Param("articleId")
 
 	res, err := bh.bu.PostBookmark(uint(userId.(float64)), articleId)
-	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, err.Error())
-	}
-	return ctx.JSON(http.StatusCreated, res)
-}
-
-func (bh *bookmarkHandler) DeleteBookmark(ctx echo.Context) error {
-	user := ctx.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
-	userId := claims["user_id"]
-
-	articleId := ctx.Param("articleId")
-
-	res, err := bh.bu.DeleteBookmark(uint(userId.(float64)), articleId)
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, err.Error())
 	}
