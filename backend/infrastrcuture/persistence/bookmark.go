@@ -16,13 +16,16 @@ func NewBookmarkPersistence(db *gorm.DB) repository.BookmarkRepository {
 	return &bookmarkPersistence{db}
 }
 
-func (bp *bookmarkPersistence) AllBookmarkByUserId(userId uint) ([]model.Bookmark, error) {
-	bookmarks := []model.Bookmark{}
-	res := bp.db.Where("user_id = ?", userId).Find(&bookmarks)
+func (bp *bookmarkPersistence) AllBookmarkedArticleByUserId(userId uint) ([]model.Article, error) {
+	bookmarkedArticles := []model.Article{}
+	res := bp.db.Table("articles").Joins("INNER JOIN bookmarks ON articles.id = bookmarks.article_id").
+		Where("bookmarks.user_id = ?", userId).
+		Find(&bookmarkedArticles)
+
 	if res.Error != nil {
-		return []model.Bookmark{}, res.Error
+		return nil, res.Error
 	}
-	return bookmarks, nil
+	return bookmarkedArticles, nil
 }
 
 func (bp *bookmarkPersistence) PostBookmark(bookmark *model.Bookmark) error {

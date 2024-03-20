@@ -26,7 +26,7 @@ func (bh *bookmarkHandler) AllBookmark(ctx echo.Context) error {
 	claims := user.Claims.(jwt.MapClaims)
 	userId := claims["user_id"]
 
-	res, err := bh.bu.AllBookmark(uint(userId.(float64)))
+	res, err := bh.bu.BookmarkedArticle(uint(userId.(float64)))
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, err.Error())
 	}
