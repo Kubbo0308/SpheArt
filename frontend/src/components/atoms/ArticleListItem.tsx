@@ -1,6 +1,6 @@
 'use client'
 
-import { DeleteBookmark, PostBookmark } from '@/api/bookmark'
+import { PostBookmark } from '@/api/bookmark'
 import { STATUS_CODE } from '@/const'
 import { AttachmentIcon } from '@chakra-ui/icons'
 import { ListItem, Text, Box, Flex, Spacer, Image, Badge, Link, Button } from '@chakra-ui/react'
@@ -29,25 +29,11 @@ export const ArticleListItem = (props: ArticleListItemProps) => {
   const isLogin = token !== undefined
   const [isBookmark, setIsBookmark] = useState(false)
 
-  const registerBookmark = async (articleId: string) => {
+  const postBookmark = async (articleId: string) => {
     const { data, status } = await PostBookmark(articleId)
     switch (status) {
-      case STATUS_CODE.CREATED:
-        setIsBookmark(true)
-        console.log(data.toString())
-        console.log('create')
-        break
-      default:
-        console.log(status)
-        break
-    }
-  }
-
-  const deleteBookmark = async (articleId: string) => {
-    const { data, status } = await DeleteBookmark(articleId)
-    switch (status) {
       case STATUS_CODE.OK:
-        setIsBookmark(false)
+        setIsBookmark(!isBookmark)
         break
       default:
         break
@@ -109,9 +95,7 @@ export const ArticleListItem = (props: ArticleListItemProps) => {
             <AttachmentIcon
               _hover={{ cursor: 'pointer' }}
               color={isBookmark ? 'yellow.primary' : 'gray.placeholder'}
-              onClick={() => {
-                isBookmark ? deleteBookmark(String(article.id)) : registerBookmark(String(article.id))
-              }}
+              onClick={() => postBookmark(String(article.id))}
             >
               ブックマーク
             </AttachmentIcon>
