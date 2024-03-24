@@ -16,15 +16,16 @@ type ArticleProps = {
 
 type ArticleListProps = {
   articles: ArticleProps[]
+  token: string | undefined
 }
 
 export const ArticleList = (props: ArticleListProps) => {
-  const { articles } = props
+  const { articles, token } = props
   return (
     <List spacing={3}>
       {articles.map((article: ArticleProps) => (
         <div key={article.id}>
-          <ArticleListItem article={article} />
+          <ArticleListItem article={article} token={token} />
         </div>
       ))}
     </List>

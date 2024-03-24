@@ -3,15 +3,14 @@ package handler
 import (
 	"backend/usecase"
 	"net/http"
-	"strconv"
 
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
 
 type BookmarkHandler interface {
 	AllBookmark(ctx echo.Context) error
 	PostBookmark(ctx echo.Context) error
-	DeleteBookmark(ctx echo.Context) error
 }
 
 type bookmarkHandler struct {
@@ -23,11 +22,11 @@ func NewBookmarkHandler(bu usecase.BookmarkUsecase) BookmarkHandler {
 }
 
 func (bh *bookmarkHandler) AllBookmark(ctx echo.Context) error {
-	userId, err := strconv.Atoi(ctx.Param("userId"))
-	if err != nil {
-		return ctx.JSON(http.StatusBadRequest, err.Error())
-	}
-	res, err := bh.bu.AllBookmark(uint(userId))
+	user := ctx.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	userId := claims["user_id"]
+
+	res, err := bh.bu.BookmarkedArticle(uint(userId.(float64)))
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, err.Error())
 	}
@@ -35,26 +34,13 @@ func (bh *bookmarkHandler) AllBookmark(ctx echo.Context) error {
 }
 
 func (bh *bookmarkHandler) PostBookmark(ctx echo.Context) error {
-	userId, err := strconv.Atoi(ctx.Param("userId"))
-	if err != nil {
-		return ctx.JSON(http.StatusBadRequest, err.Error())
-	}
+	user := ctx.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	userId := claims["user_id"]
+
 	articleId := ctx.Param("articleId")
 
-	res, err := bh.bu.PostBookmark(uint(userId), articleId)
-	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, err.Error())
-	}
-	return ctx.JSON(http.StatusCreated, res)
-}
-
-func (bh *bookmarkHandler) DeleteBookmark(ctx echo.Context) error {
-	userIdInt, err := strconv.Atoi(ctx.Param("userId"))
-	if err != nil {
-		return ctx.JSON(http.StatusBadRequest, err.Error())
-	}
-	articleId := ctx.Param("articleId")
-	res, err := bh.bu.DeleteBookmark(uint(userIdInt), articleId)
+	res, err := bh.bu.PostBookmark(uint(userId.(float64)), articleId)
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, err.Error())
 	}
