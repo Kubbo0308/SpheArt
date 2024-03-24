@@ -21,7 +21,6 @@ func (bp *bookmarkPersistence) AllBookmarkedArticleByUserId(userId uint) ([]mode
 	res := bp.db.Table("articles").Joins("INNER JOIN bookmarks ON articles.id = bookmarks.article_id").
 		Where("bookmarks.user_id = ?", userId).
 		Find(&bookmarkedArticles)
-
 	if res.Error != nil {
 		return nil, res.Error
 	}
