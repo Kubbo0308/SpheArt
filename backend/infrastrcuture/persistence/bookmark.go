@@ -30,7 +30,8 @@ func (bp *bookmarkPersistence) AllBookmarkedArticleByUserId(userId uint) ([]mode
 func (bp *bookmarkPersistence) PostBookmark(bookmark *model.Bookmark) error {
 	// ブックマークがすでに存在するかを確認
 	existingBookmark := model.Bookmark{}
-	if err := bp.db.Where("user_id = ? AND article_id = ?", bookmark.UserID, bookmark.ArticleID).First(&existingBookmark).Error; err != nil {
+	if err := bp.db.Where("user_id = ? AND article_id = ?",
+		bookmark.UserID, bookmark.ArticleID).First(&existingBookmark).Error; err != nil {
 		if !errors.Is(err, gorm.ErrRecordNotFound) {
 			// 予期しないエラーが発生した場合
 			return err
