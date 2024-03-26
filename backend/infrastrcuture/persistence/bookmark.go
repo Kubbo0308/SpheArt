@@ -16,6 +16,24 @@ func NewBookmarkPersistence(db *gorm.DB) repository.BookmarkRepository {
 	return &bookmarkPersistence{db}
 }
 
+func (bp *bookmarkPersistence) BookmarkedArticlesPerPages(userId uint, pageNum int) ([]model.Article, error) {
+	bookmarkedArticles := []model.Article{}
+	// 1ページあたりの記事数
+	const pageSize = 30
+	// ページ番号から、OFFSETの計算を行います。ページ番号は1から始まる
+	offset := (pageNum - 1) * pageSize
+	// LimitとOffsetメソッドを使ってページネーションを適用
+	res := bp.db.Table("articles").
+		Joins("INNER JOIN bookmarks ON articles.id = bookmarks.article_id").
+		Where("bookmarks.user_id = ?", userId).
+		Limit(pageSize).Offset(offset).
+		Find(&bookmarkedArticles)
+	if res.Error != nil {
+		return []model.Article{}, res.Error
+	}
+	return bookmarkedArticles, nil
+}
+
 func (bp *bookmarkPersistence) AllBookmarkedArticleByUserId(userId uint) ([]model.Article, error) {
 	bookmarkedArticles := []model.Article{}
 	res := bp.db.Table("articles").Joins("INNER JOIN bookmarks ON articles.id = bookmarks.article_id").
