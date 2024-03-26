@@ -6,8 +6,8 @@ import (
 )
 
 type BookmarkUsecase interface {
-	AllBookmarkedArticle(userId uint) ([]model.Article, error)
 	BookmarkedArticlePerPage(userId uint, pageNum int) ([]model.Article, error)
+	AllBookmarkedArticle(userId uint) ([]model.Article, error)
 	PostBookmark(userId uint, articleId string) (model.Bookmark, error)
 }
 
@@ -19,16 +19,16 @@ func NewBookmarkUsecase(br repository.BookmarkRepository) BookmarkUsecase {
 	return &bookmarkUsecase{br}
 }
 
-func (bu *bookmarkUsecase) AllBookmarkedArticle(userId uint) ([]model.Article, error) {
-	bookmarkedArticles, err := bu.br.AllBookmarkedArticleByUserId(userId)
+func (bu *bookmarkUsecase) BookmarkedArticlePerPage(userId uint, pageNum int) ([]model.Article, error) {
+	bookmarkedArticles, err := bu.br.BookmarkedArticlesPerPages(userId, pageNum)
 	if err != nil {
 		return []model.Article{}, err
 	}
 	return bookmarkedArticles, nil
 }
 
-func (bu *bookmarkUsecase) BookmarkedArticlePerPage(userId uint, pageNum int) ([]model.Article, error) {
-	bookmarkedArticles, err := bu.br.BookmarkedArticlesPerPages(userId, pageNum)
+func (bu *bookmarkUsecase) AllBookmarkedArticle(userId uint) ([]model.Article, error) {
+	bookmarkedArticles, err := bu.br.AllBookmarkedArticleByUserId(userId)
 	if err != nil {
 		return []model.Article{}, err
 	}

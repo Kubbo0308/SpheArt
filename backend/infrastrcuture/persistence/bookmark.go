@@ -16,17 +16,6 @@ func NewBookmarkPersistence(db *gorm.DB) repository.BookmarkRepository {
 	return &bookmarkPersistence{db}
 }
 
-func (bp *bookmarkPersistence) AllBookmarkedArticleByUserId(userId uint) ([]model.Article, error) {
-	bookmarkedArticles := []model.Article{}
-	res := bp.db.Table("articles").Joins("INNER JOIN bookmarks ON articles.id = bookmarks.article_id").
-		Where("bookmarks.user_id = ?", userId).
-		Find(&bookmarkedArticles)
-	if res.Error != nil {
-		return nil, res.Error
-	}
-	return bookmarkedArticles, nil
-}
-
 func (bp *bookmarkPersistence) BookmarkedArticlesPerPages(userId uint, pageNum int) ([]model.Article, error) {
 	bookmarkedArticles := []model.Article{}
 	// 1ページあたりの記事数
@@ -41,6 +30,17 @@ func (bp *bookmarkPersistence) BookmarkedArticlesPerPages(userId uint, pageNum i
 		Find(&bookmarkedArticles)
 	if res.Error != nil {
 		return []model.Article{}, res.Error
+	}
+	return bookmarkedArticles, nil
+}
+
+func (bp *bookmarkPersistence) AllBookmarkedArticleByUserId(userId uint) ([]model.Article, error) {
+	bookmarkedArticles := []model.Article{}
+	res := bp.db.Table("articles").Joins("INNER JOIN bookmarks ON articles.id = bookmarks.article_id").
+		Where("bookmarks.user_id = ?", userId).
+		Find(&bookmarkedArticles)
+	if res.Error != nil {
+		return nil, res.Error
 	}
 	return bookmarkedArticles, nil
 }

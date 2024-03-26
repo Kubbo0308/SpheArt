@@ -23,8 +23,8 @@ func NewRouter(ah handler.ArticleHandler, uh handler.UserHandler, bh handler.Boo
 		AllowCredentials: true,
 	}))
 
-	e.GET("/articles", ah.AllArticles)
 	e.GET("/articles", ah.ArticlesPerPage)
+	e.GET("/articles/all", ah.AllArticles)
 	e.GET("/articles/search", ah.SearchInArticleTitle)
 	e.POST("/signup", uh.SignUp)
 	e.POST("/signin", uh.SignIn)
@@ -37,8 +37,8 @@ func NewRouter(ah handler.ArticleHandler, uh handler.UserHandler, bh handler.Boo
 		// Clientから送られてくるjwtトークンの置き場所を指定
 		TokenLookup: "cookie:token",
 	}))
-	b.GET("", bh.AllBookmark)
 	b.GET("", bh.BookmarkPerPage)
+	b.GET("/all", bh.AllBookmark)
 	b.POST("/:articleId", bh.PostBookmark)
 	return e
 }

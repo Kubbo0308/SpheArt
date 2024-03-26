@@ -10,8 +10,8 @@ import (
 )
 
 type BookmarkHandler interface {
-	AllBookmark(ctx echo.Context) error
 	BookmarkPerPage(ctx echo.Context) error
+	AllBookmark(ctx echo.Context) error
 	PostBookmark(ctx echo.Context) error
 }
 
@@ -21,18 +21,6 @@ type bookmarkHandler struct {
 
 func NewBookmarkHandler(bu usecase.BookmarkUsecase) BookmarkHandler {
 	return &bookmarkHandler{bu}
-}
-
-func (bh *bookmarkHandler) AllBookmark(ctx echo.Context) error {
-	user := ctx.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
-	userId := claims["user_id"]
-
-	res, err := bh.bu.AllBookmarkedArticle(uint(userId.(float64)))
-	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, err.Error())
-	}
-	return ctx.JSON(http.StatusOK, res)
 }
 
 func (bh *bookmarkHandler) BookmarkPerPage(ctx echo.Context) error {
@@ -49,6 +37,18 @@ func (bh *bookmarkHandler) BookmarkPerPage(ctx echo.Context) error {
 	}
 
 	res, err := bh.bu.BookmarkedArticlePerPage(uint(userId.(float64)), perPage)
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, err.Error())
+	}
+	return ctx.JSON(http.StatusOK, res)
+}
+
+func (bh *bookmarkHandler) AllBookmark(ctx echo.Context) error {
+	user := ctx.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	userId := claims["user_id"]
+
+	res, err := bh.bu.AllBookmarkedArticle(uint(userId.(float64)))
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, err.Error())
 	}
