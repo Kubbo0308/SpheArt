@@ -6,7 +6,7 @@ import { AttachmentIcon } from '@chakra-ui/icons'
 import { ListItem, Text, Box, Flex, Spacer, Image, Badge, Link, Button } from '@chakra-ui/react'
 import { useState } from 'react'
 
-type ArticleProps = {
+export type ArticleProps = {
   id: number
   title: string
   url: string
