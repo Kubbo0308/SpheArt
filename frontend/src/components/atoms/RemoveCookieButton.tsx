@@ -11,6 +11,5 @@ interface RemoveCookieButtonProps {
 export const RemoveCookieButton = (props: RemoveCookieButtonProps) => {
   const { title, url } = props
 
-  const cookies = useCookies()
-  return <LinkButton title={title} url={url} onClick={() => cookies.remove('token')}></LinkButton>
+  return <LinkButton title={title} url={url}></LinkButton>
 }

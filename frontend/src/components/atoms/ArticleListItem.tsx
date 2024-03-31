@@ -1,12 +1,12 @@
 'use client'
 
-import { PostBookmark } from '@/api/postBookmark'
+import { PostBookmark } from '@/api/bookmark'
 import { STATUS_CODE } from '@/const'
 import { AttachmentIcon } from '@chakra-ui/icons'
 import { ListItem, Text, Box, Flex, Spacer, Image, Badge, Link, Button } from '@chakra-ui/react'
 import { useState } from 'react'
 
-type ArticleProps = {
+export type ArticleProps = {
   id: number
   title: string
   url: string

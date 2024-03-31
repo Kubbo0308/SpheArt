@@ -25,6 +25,7 @@ export async function SignIn(email: string, password: string) {
       email: email,
       password: password
     }),
+    credentials: "include", // Cookieを含める
   })
   const data = await res.json()
   return { status: res.status, data: data }
@@ -40,6 +41,7 @@ export async function SignOut(email: string, password: string) {
       email: email,
       password: password
     }),
+    credentials: "include", // Cookieを含める
   })
   return { status: res.status }
 }
