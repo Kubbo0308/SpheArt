@@ -26,7 +26,7 @@ export const Header = () => {
           </Link>
           <Flex w="100%" h="100%" justifyContent="flex-end" gap="3%">
             <SearchIconComponent />
-            <a href={`${CONST.BOOKMARK}`}>bookmark</a>
+            {cookies.get('token') !== undefined && <a href={`${CONST.BOOKMARK}`}>bookmark</a>}
             {cookies.get('token') !== undefined ? (
               <RemoveCookieButton title="ログアウト" url={`${CONST.TOP}`} />
             ) : (
