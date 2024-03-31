@@ -1,6 +1,7 @@
 
 import { GetBookmark } from "@/api/bookmark"
 import { ArticleProps } from "@/components/atoms/ArticleListItem"
+import { STATUS_CODE } from "@/const"
 import { useEffect, useState } from "react"
 
 interface returnValue {
@@ -16,8 +17,15 @@ export const useBookmarkPageHooks = (): returnValue => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await GetBookmark(currentPage)
-      setArticles(response.data)
+      const { data, status } = await GetBookmark(currentPage)
+      switch (status) {
+        case STATUS_CODE.OK:
+          setArticles(data)
+          break // 成功時の処理が完了したらbreakを忘れずに
+        default:
+          alert(status)
+          break
+      }
     }
 
     fetchData()

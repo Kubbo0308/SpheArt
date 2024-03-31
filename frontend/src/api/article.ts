@@ -5,7 +5,8 @@ export async function getArticles(pageNum: number) {
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
-  return res.json()
+  const data = await res.json()
+  return { status: res.status, data: data }
 }
 
 export async function searchArticlesInTitle(title: string) {
@@ -13,5 +14,6 @@ export async function searchArticlesInTitle(title: string) {
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
-  return res.json()
+  const data = await res.json()
+  return { status: res.status, data: data }
 }

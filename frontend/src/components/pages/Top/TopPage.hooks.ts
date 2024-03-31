@@ -2,6 +2,7 @@
 
 import { getArticles } from "@/api/article"
 import { ArticleProps } from "@/components/atoms/ArticleListItem"
+import { STATUS_CODE } from "@/const"
 import { useEffect, useState } from "react"
 
 interface returnValue {
@@ -17,8 +18,15 @@ export const useTopPageHooks = (): returnValue => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getArticles(currentPage)
-      setArticles(response)
+      const { data, status } = await getArticles(currentPage)
+      switch (status) {
+        case STATUS_CODE.OK:
+          setArticles(data)
+          break // 成功時の処理が完了したらbreakを忘れずに
+        default:
+          alert(status)
+          break
+      }
     }
 
     fetchData()
