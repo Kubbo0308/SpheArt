@@ -64,7 +64,8 @@ export const SignInPage = () => {
     switch (status) {
       case STATUS_CODE.OK:
         // ログイン成功時
-        cookies.set('token', data)
+        // cookies.set('token', data)
+        alert('login')
         router.push(CONST.TOP)
         break // 成功時の処理が完了したらbreakを忘れずに
       default:
