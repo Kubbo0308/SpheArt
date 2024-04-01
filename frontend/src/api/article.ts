@@ -1,7 +1,7 @@
 import { CONST } from "@/const";
 
 export async function getArticles(pageNum: number) {
-  const res = await fetch(`http://localhost:8080${CONST.ARTICLES}?per_page=${pageNum}`, { next: { revalidate: 3600 } })
+  const res = await fetch(`${CONST.API_BASE_PATH}${CONST.ARTICLES}?per_page=${pageNum}`, { next: { revalidate: 3600 } })
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }

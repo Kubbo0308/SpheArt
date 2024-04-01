@@ -1,7 +1,7 @@
 import { CONST } from "@/const"
 
 export async function GetBookmark(pageNum: number) {
-  const res = await fetch(`http://localhost:8080${CONST.BOOKMARK}?per_page=${pageNum}`, {
+  const res = await fetch(`${CONST.API_BASE_PATH}${CONST.BOOKMARK}?per_page=${pageNum}`, {
     method: "GET",
     headers: {
       'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ export async function GetBookmark(pageNum: number) {
 }
 
 export async function PostBookmark(articleId: string) {
-  const res = await fetch(`http://localhost:8080${CONST.BOOKMARK}/${articleId}`, {
+  const res = await fetch(`${CONST.API_BASE_PATH}${CONST.BOOKMARK}/${articleId}`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',

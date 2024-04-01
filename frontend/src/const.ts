@@ -1,5 +1,5 @@
 export const CONST = {
-  API_BASE_PATH: "http://backend:8080",
+  API_BASE_PATH: "http://localhost:8080",
   TOP: "/",
   CSRF_TOKEN: "/csrf",
   ARTICLES: "/articles",
