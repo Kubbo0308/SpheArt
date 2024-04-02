@@ -7,7 +7,6 @@ import { FormInput } from '@/components/atoms/FormInput'
 import { SignIn } from '@/api/user'
 import { CONST, STATUS_CODE } from '@/const'
 import { SignInFormSchema, SignInFormType } from '@/schemas/SignInFormSchema'
-import { useCookies } from 'next-client-cookies'
 import { useRouter } from 'next/navigation'
 
 interface FormData {
@@ -16,7 +15,6 @@ interface FormData {
 }
 
 export const SignInPage = () => {
-  const cookies = useCookies()
   const router = useRouter()
   const methods = useForm<SignInFormType>({
     mode: 'onChange',
