@@ -3,10 +3,13 @@ import { SearchInput } from '../../atoms/SearchInput'
 import { SearchIconComponent } from '../../atoms/SearchIconComponent'
 import Link from 'next/link'
 import { CONST } from '@/const'
-import { LinkButton } from '../../atoms/LinkButton'
-import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
+import { AuthButton } from '@/components/molecules/AuthButton/AuthButton'
+import { cookies } from 'next/headers'
 
-export const Header = ({ token }: { token: RequestCookie | undefined }) => {
+export const Header = () => {
+  const cookieStore = cookies()
+  const token = cookieStore.get('token')
+
   return (
     <>
       <Flex bg="yellow.primary" w="100%" h="7vh" alignItems="center">
@@ -23,12 +26,13 @@ export const Header = ({ token }: { token: RequestCookie | undefined }) => {
           </Link>
           <Flex w="100%" h="100%" justifyContent="flex-end" gap="3%">
             <SearchIconComponent />
-            {token !== undefined && <a href={`${CONST.BOOKMARK}`}>bookmark</a>}
-            {token !== undefined ? (
+            <a href={`${CONST.BOOKMARK}`}>bookmark</a>
+            {/* {token !== undefined ? (
               <LinkButton title="ログアウト" url={`${CONST.AUTH}${CONST.SIGN_OUT}`} />
             ) : (
               <LinkButton title="ログイン" url={`${CONST.AUTH}${CONST.SIGN_IN}`} />
-            )}
+            )} */}
+            <AuthButton token={token} />
           </Flex>
         </Flex>
       </Flex>
