@@ -14,7 +14,6 @@
     "@chakra-ui/react": "^2.8.2",
     "@hookform/resolvers": "^3.3.4",
     "next": "14.0.4",
-    "next-client-cookies": "^1.1.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.50.1",
