@@ -1,5 +1,6 @@
 import { List } from '@chakra-ui/react'
 import { ArticleListItem } from '../atoms/ArticleListItem'
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 
 type ArticleProps = {
   id: number
@@ -16,7 +17,7 @@ type ArticleProps = {
 
 type ArticleListProps = {
   articles: ArticleProps[]
-  token: string | undefined
+  token: RequestCookie | undefined
 }
 
 export const ArticleList = (props: ArticleListProps) => {
