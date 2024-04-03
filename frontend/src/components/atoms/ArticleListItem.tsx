@@ -4,6 +4,7 @@ import { PostBookmark } from '@/api/bookmark'
 import { STATUS_CODE } from '@/const'
 import { AttachmentIcon } from '@chakra-ui/icons'
 import { ListItem, Text, Box, Flex, Spacer, Image, Badge, Link, Button } from '@chakra-ui/react'
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import { useState } from 'react'
 
 export type ArticleProps = {
@@ -21,7 +22,7 @@ export type ArticleProps = {
 
 type ArticleListItemProps = {
   article: ArticleProps
-  token: string | undefined
+  token: RequestCookie | undefined
 }
 
 export const ArticleListItem = (props: ArticleListItemProps) => {

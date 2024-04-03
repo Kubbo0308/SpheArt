@@ -1,4 +1,4 @@
-import { SignInPage } from '@/components/pages/SignInPage'
+import { SignInPage } from '@/components/pages/Auth/SignIn/SignInPage'
 import { CONST } from '@/const'
 import { Link } from '@chakra-ui/react'
 

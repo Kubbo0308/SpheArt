@@ -1,22 +1,45 @@
-'use client'
-
-import { useForm, FormProvider, useWatch } from 'react-hook-form'
+import { FieldErrors, useForm, UseFormHandleSubmit, UseFormRegister, UseFormReturn, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Container } from '@chakra-ui/react'
-import { FormInput } from '@/components/atoms/FormInput'
 import { SignIn } from '@/api/user'
 import { CONST, STATUS_CODE } from '@/const'
 import { SignInFormSchema, SignInFormType } from '@/schemas/SignInFormSchema'
-import { useCookies } from 'next-client-cookies'
 import { useRouter } from 'next/navigation'
 
-interface FormData {
-  email: string
-  password: string
+interface returnValue {
+  methods: UseFormReturn<
+    {
+      email: string
+      password: string
+    },
+    any,
+    {
+      email: string
+      password: string
+    }
+  >
+  handleSubmit: UseFormHandleSubmit<
+    {
+      email: string
+      password: string
+    },
+    {
+      email: string
+      password: string
+    }
+  >
+  onSubmit: (params: SignInFormType) => Promise<void>
+  register: UseFormRegister<{
+    email: string
+    password: string
+  }>
+  errors: FieldErrors<{
+    email: string
+    password: string
+  }>
+  isDisabled: () => boolean
 }
 
-export const SignInPage = () => {
-  const cookies = useCookies()
+export const useSignInPage = (): returnValue => {
   const router = useRouter()
   const methods = useForm<SignInFormType>({
     mode: 'onChange',
@@ -58,9 +81,9 @@ export const SignInPage = () => {
     return isDisabled
   }
 
-  const onSubmit = async (params: FormData) => {
+  const onSubmit = async (params: SignInFormType) => {
     const { email, password } = params
-    const { data, status } = await SignIn(email, password)
+    const { status } = await SignIn(email, password)
     switch (status) {
       case STATUS_CODE.OK:
         // ログイン成功時
@@ -74,31 +97,5 @@ export const SignInPage = () => {
     }
   }
 
-  return (
-    <Container size="md">
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <FormInput
-            type="email"
-            register={register('email')}
-            label="メールアドレス"
-            placeholder="example@example.com"
-            required={true}
-            errMessage={errors.email?.message}
-          />
-          <FormInput
-            type="password"
-            register={register('password')}
-            label="パスワード"
-            placeholder="パスワードを入力"
-            required={true}
-            errMessage={errors.password?.message}
-          />
-          <Button type="submit" isDisabled={isDisabled()}>
-            ログイン
-          </Button>
-        </form>
-      </FormProvider>
-    </Container>
-  )
+  return { methods, handleSubmit, onSubmit, register, errors, isDisabled }
 }

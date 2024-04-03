@@ -3,9 +3,10 @@
 import { ArticleList } from '@/components/organisms/ArticleList'
 import { Button, Container, Flex } from '@chakra-ui/react'
 import { useTopPageHooks } from './TopPage.hooks'
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 
 interface TopPageProps {
-  token: string | undefined
+  token: RequestCookie | undefined
 }
 
 export const TopPage = (props: TopPageProps) => {

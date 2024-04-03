@@ -2,7 +2,7 @@ import { Button, Link } from '@chakra-ui/react'
 
 interface LinkButtonProps {
   title: string
-  url: string
+  url?: string
   bgColor?: string
   color?: string
   onClick?: () => void

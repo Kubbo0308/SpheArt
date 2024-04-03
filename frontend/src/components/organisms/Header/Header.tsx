@@ -1,14 +1,14 @@
 import { Flex, Image } from '@chakra-ui/react'
-import { SearchInput } from '../atoms/SearchInput'
-import { SearchIconComponent } from '../atoms/SearchIconComponent'
+import { SearchInput } from '../../atoms/SearchInput'
+import { SearchIconComponent } from '../../atoms/SearchIconComponent'
 import Link from 'next/link'
 import { CONST } from '@/const'
-import { LinkButton } from '../atoms/LinkButton'
-import { getCookies } from 'next-client-cookies/server'
-import { RemoveCookieButton } from '../atoms/RemoveCookieButton'
+import { AuthButton } from '@/components/molecules/AuthButton/AuthButton'
+import { cookies } from 'next/headers'
 
 export const Header = () => {
-  const cookies = getCookies()
+  const cookieStore = cookies()
+  const token = cookieStore.get('token')
 
   return (
     <>
@@ -26,12 +26,13 @@ export const Header = () => {
           </Link>
           <Flex w="100%" h="100%" justifyContent="flex-end" gap="3%">
             <SearchIconComponent />
-            {cookies.get('token') !== undefined && <a href={`${CONST.BOOKMARK}`}>bookmark</a>}
-            {cookies.get('token') !== undefined ? (
-              <RemoveCookieButton title="ログアウト" url={`${CONST.TOP}`} />
+            <a href={`${CONST.BOOKMARK}`}>bookmark</a>
+            {/* {token !== undefined ? (
+              <LinkButton title="ログアウト" url={`${CONST.AUTH}${CONST.SIGN_OUT}`} />
             ) : (
               <LinkButton title="ログイン" url={`${CONST.AUTH}${CONST.SIGN_IN}`} />
-            )}
+            )} */}
+            <AuthButton token={token} />
           </Flex>
         </Flex>
       </Flex>

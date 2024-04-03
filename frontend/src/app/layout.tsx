@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { Header } from '@/components/organisms/Header'
 import { Provider } from './provider'
-import { CookiesProvider } from 'next-client-cookies/server'
+import { Header } from '@/components/organisms/Header/Header'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,10 +15,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ja">
       <body className={inter.className}>
         <Provider>
-          <CookiesProvider>
-            <Header />
-            {children}
-          </CookiesProvider>
+          <Header />
+          {children}
         </Provider>
       </body>
     </html>
