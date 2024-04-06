@@ -13,7 +13,7 @@ export const SignInPage = () => {
     <Container pt={{ base: '30px', md: '50px' }} pb="50px" px="20px">
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Container bg="white.primary" p="30px">
+          <Container bg="white.primary" p="30px" boxShadow="md">
             <Text fontSize="24px" fontWeight={700} lineHeight={1.8} textAlign="center">
               Sign In
             </Text>
