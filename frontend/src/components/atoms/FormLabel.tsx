@@ -1,18 +1,14 @@
-import { Center, Flex } from '@chakra-ui/react'
+import { Text } from '@chakra-ui/react'
 
 interface FormLabelProps {
   label: string
-  required: boolean
 }
 
 export const FormLabel = (props: FormLabelProps) => {
-  const { label, required } = props
+  const { label } = props
   return (
-    <Flex alignItems="center">
+    <Text fontSize="16px" fontWeight={600} lineHeight={1.8}>
       {label}
-      <Center display="inline-block" bg={required ? 'black.primary' : 'yellow.primary'} borderRadius="18px">
-        {required ? '必須' : '任意'}
-      </Center>
-    </Flex>
+    </Text>
   )
 }
