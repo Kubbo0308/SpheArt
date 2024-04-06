@@ -10,9 +10,9 @@ export const AuthButton = () => {
   return (
     <>
       {token === undefined ? (
-        <LinkButton title="ログイン" url={`${CONST.AUTH}${CONST.SIGN_IN}`} />
+        <LinkButton title="サインイン" url={`${CONST.AUTH}${CONST.SIGN_IN}`} />
       ) : (
-        <LinkButton title="ログアウト" onClick={onSignOut} />
+        <LinkButton title="サインアウト" onClick={onSignOut} />
       )}
     </>
   )

@@ -11,16 +11,21 @@ export const theme = extendTheme({
     },
     gray: {
       primary: "#cccccc",
-      placeholder: "#a9a9a9"
+      placeholder: "#a9a9a9",
+      border: "#e2e8f0"
     },
     white: {
-      primary: "#f4f5f7"
+      primary: "#ffffff"
+    },
+    blue: {
+      bg: "#f7fafc",
+      accent: "#3182ce"
     }
   },
   styles: {
     global: {
       body: {
-        bg: "yellow.secondary",
+        bg: "blue.bg",
         placeholder: "gray.placeholder"
       },
       font: {

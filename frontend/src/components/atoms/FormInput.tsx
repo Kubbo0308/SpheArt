@@ -5,7 +5,6 @@ import { FormLabel } from './FormLabel'
 
 interface FormInputProps {
   label: string
-  required: boolean
   type?: HTMLInputTypeAttribute
   placeholder?: string
   register?: UseFormRegisterReturn
@@ -13,12 +12,12 @@ interface FormInputProps {
 }
 
 export const FormInput = (props: FormInputProps) => {
-  const { label, required, type = 'text', placeholder, register, errMessage } = props
+  const { label, type = 'text', placeholder, register, errMessage } = props
   return (
     <Box>
       <FormControl isInvalid={!!errMessage}>
-        <FormLabel label={label} required={required} />
-        <Input type={type} {...register} placeholder={placeholder} />
+        <FormLabel label={label} />
+        <Input type={type} {...register} placeholder={placeholder} mt="5px" />
         {!!errMessage && <FormErrorMessage>{errMessage}</FormErrorMessage>}
       </FormControl>
     </Box>

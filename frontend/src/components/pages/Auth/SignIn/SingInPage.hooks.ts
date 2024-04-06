@@ -6,36 +6,11 @@ import { SignInFormSchema, SignInFormType } from '@/schemas/SignInFormSchema'
 import { useRouter } from 'next/navigation'
 
 interface returnValue {
-  methods: UseFormReturn<
-    {
-      email: string
-      password: string
-    },
-    any,
-    {
-      email: string
-      password: string
-    }
-  >
-  handleSubmit: UseFormHandleSubmit<
-    {
-      email: string
-      password: string
-    },
-    {
-      email: string
-      password: string
-    }
-  >
+  methods: UseFormReturn<SignInFormType>
+  handleSubmit: UseFormHandleSubmit<SignInFormType>
   onSubmit: (params: SignInFormType) => Promise<void>
-  register: UseFormRegister<{
-    email: string
-    password: string
-  }>
-  errors: FieldErrors<{
-    email: string
-    password: string
-  }>
+  register: UseFormRegister<SignInFormType>
+  errors: FieldErrors<SignInFormType>
   isDisabled: () => boolean
 }
 
