@@ -6,35 +6,11 @@ import { SignUpFormSchema, SignUpFormType } from '@/schemas/SignUpFormSchema'
 import { useRouter } from 'next/navigation'
 
 interface returnValue {
-  methods: UseFormReturn<{
-    email: string;
-    password: string;
-    confirmPassword: string;
-}, any, {
-    email: string;
-    password: string;
-    confirmPassword: string;
-}>
-handleSubmit: UseFormHandleSubmit<{
-  email: string;
-  password: string;
-  confirmPassword: string;
-}, {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}>
+  methods: UseFormReturn<SignUpFormType>
+handleSubmit: UseFormHandleSubmit<SignUpFormType>
   onSubmit: (params: SignUpFormType) => Promise<void>
-  register: UseFormRegister<{
-    email: string;
-    password: string;
-    confirmPassword: string;
-}>
-errors: FieldErrors<{
-  email: string;
-  password: string;
-  confirmPassword: string;
-}>
+  register: UseFormRegister<SignUpFormType>
+errors: FieldErrors<SignUpFormType>
   isDisabled: () => boolean
 }
 
