@@ -100,6 +100,7 @@ export const useSignUpPage = (): returnValue => {
         switch (status) {
           case STATUS_CODE.OK:
             router.push(CONST.TOP)
+            window.location.reload()
             break // 成功時の処理が完了したらbreakを忘れずに
           default:
             break
