@@ -1,6 +1,6 @@
 
 import { GetBookmark } from "@/api/bookmark"
-import { ArticleProps } from "@/components/atoms/ArticleListItem"
+import { ArticleProps } from "@/components/molecules/ArticleCard/ArticleCard"
 import { STATUS_CODE } from "@/const"
 import { useEffect, useState } from "react"
 

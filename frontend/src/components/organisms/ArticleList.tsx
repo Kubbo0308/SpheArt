@@ -1,5 +1,5 @@
-import { List } from '@chakra-ui/react'
-import { ArticleListItem } from '../atoms/ArticleListItem'
+import { Flex } from '@chakra-ui/react'
+import { ArticleCard } from '../molecules/ArticleCard/ArticleCard'
 import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 
 type ArticleProps = {
@@ -23,12 +23,12 @@ type ArticleListProps = {
 export const ArticleList = (props: ArticleListProps) => {
   const { articles, token } = props
   return (
-    <List spacing={3}>
+    <Flex flexWrap="wrap" gap="20px" justifyContent="center">
       {articles.map((article: ArticleProps) => (
         <div key={article.id}>
-          <ArticleListItem article={article} token={token} />
+          <ArticleCard article={article} token={token} />
         </div>
       ))}
-    </List>
+    </Flex>
   )
 }
