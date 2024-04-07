@@ -1,7 +1,7 @@
 "use client"
 
 import { getArticles } from "@/api/article"
-import { ArticleProps } from "@/components/atoms/ArticleListItem"
+import { ArticleProps } from "@/components/molecules/ArticleCard/ArticleCard"
 import { STATUS_CODE } from "@/const"
 import { useEffect, useState } from "react"
 
