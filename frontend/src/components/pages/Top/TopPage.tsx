@@ -11,7 +11,7 @@ interface TopPageProps {
 
 export const TopPage = (props: TopPageProps) => {
   const { token } = props
-  const { currentPage, articles, goNextPage, backPreviousPage } = useTopPageHooks()
+  const { articles, goNextPage, backPreviousPage } = useTopPageHooks()
   return (
     <Container maxW="container.md" py="5%">
       <ArticleList articles={articles} token={token} />

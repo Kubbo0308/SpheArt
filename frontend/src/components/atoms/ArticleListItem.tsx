@@ -2,8 +2,7 @@
 
 import { PostBookmark } from '@/api/bookmark'
 import { STATUS_CODE } from '@/const'
-import { AttachmentIcon } from '@chakra-ui/icons'
-import { ListItem, Text, Box, Flex, Spacer, Image, Badge, Link, Button } from '@chakra-ui/react'
+import { Text, Box, Flex, Image, Link } from '@chakra-ui/react'
 import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import { useState } from 'react'
 import { BookmarkButton } from './BookmarkButton'
@@ -49,7 +48,7 @@ export const ArticleListItem = (props: ArticleListItemProps) => {
   }
 
   return (
-    <ListItem borderRadius="8px" overflow="hidden" boxShadow="sm" bg="white.primary" w="320px">
+    <Box borderRadius="8px" overflow="hidden" boxShadow="sm" bg="white.primary" w="320px">
       <Image
         // src={article.publisher_image_url}
         src="/no_image.svg"
@@ -80,6 +79,6 @@ export const ArticleListItem = (props: ArticleListItemProps) => {
           </Flex>
         </Flex>
       </Box>
-    </ListItem>
+    </Box>
   )
 }

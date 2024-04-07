@@ -6,7 +6,6 @@ import { STATUS_CODE } from "@/const"
 import { useEffect, useState } from "react"
 
 interface returnValue {
-  currentPage: number
   articles: ArticleProps[]
   goNextPage: () => void
   backPreviousPage: () => void
@@ -40,5 +39,5 @@ export const useTopPageHooks = (): returnValue => {
     setCurrentPage(currentPage - 1)
   }
 
-  return { currentPage, articles, goNextPage, backPreviousPage }
+  return { articles, goNextPage, backPreviousPage }
 }
