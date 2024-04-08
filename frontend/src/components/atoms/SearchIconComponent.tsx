@@ -8,10 +8,10 @@ export const SearchIconComponent = () => {
   const [isSearch, setIsSearch] = useRecoilState(IsSearchAtom)
   return (
     <Search2Icon
-      h="60%"
-      w="5%"
+      h="25px"
+      w="25px"
       my="auto"
-      color="black.primary"
+      color="gray.accent"
       onClick={() => setIsSearch(!isSearch)}
       _hover={{ cursor: 'pointer', opacity: '0.5' }}
     />

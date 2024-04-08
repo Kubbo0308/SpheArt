@@ -21,9 +21,9 @@ export const SearchInput = () => {
   }
 
   return (
-    <Stack spacing={4} display={isSearch ? 'block' : 'none'} pb="1%" bg="yellow.primary" w="100%" px="3%">
+    <Stack spacing={4} display={isSearch ? 'block' : 'none'} pb="1%" bg="white.primary" w="100%" px="3%">
       <form onSubmit={onSubmitHandler}>
-        <InputGroup bg="yellow.secondary" borderColor="yellow.primary" borderRadius="15px">
+        <InputGroup bg="gray.light" borderColor="gray.placehorder" borderRadius="15px">
           <InputLeftElement pointerEvents="none">
             <Search2Icon h="60%" color="gray.placeholder" />
           </InputLeftElement>
