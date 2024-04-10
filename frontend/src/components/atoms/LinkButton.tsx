@@ -9,10 +9,12 @@ interface LinkButtonProps {
 }
 
 export const LinkButton = (props: LinkButtonProps) => {
-  const { title, url, bgColor = 'black.primary', color = 'white.primary', onClick } = props
+  const { title, url, bgColor = 'blue.accent', color = 'white.primary', onClick } = props
   return (
-    <Button bg={bgColor} color={color} onClick={onClick}>
-      <Link href={url}>{title}</Link>
+    <Button bg={bgColor} color={color} onClick={onClick} borderRadius="20px" h="35px" w="70px">
+      <Link href={url} fontSize="15px" fontWeight={600}>
+        {title}
+      </Link>
     </Button>
   )
 }
