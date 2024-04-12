@@ -26,7 +26,6 @@ export const Header = () => {
           </Link>
           <Flex w="100%" h="100%" justifyContent="flex-end" gap="3%" alignItems="center">
             <SearchIconComponent />
-            {/* <a href={`${CONST.BOOKMARK}`}>bookmark</a> */}
             <AuthButton />
           </Flex>
         </Flex>
