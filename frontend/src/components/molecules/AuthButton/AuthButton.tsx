@@ -3,6 +3,9 @@
 import { useAuthButton } from './AuthButton.hooks'
 import { LinkButton } from '@/components/atoms/LinkButton'
 import { CONST } from '@/const'
+import { Button, Flex, Image, Menu, MenuButton, MenuDivider, MenuItem, MenuList } from '@chakra-ui/react'
+import Link from 'next/link'
+import { HeaderMenu } from '../HeaderMenu'
 
 export const AuthButton = () => {
   const { onSignOut, token } = useAuthButton()
@@ -10,9 +13,9 @@ export const AuthButton = () => {
   return (
     <>
       {token === undefined ? (
-        <LinkButton title="サインイン" url={`${CONST.AUTH}${CONST.SIGN_IN}`} />
+        <LinkButton title="Sign In" url={`${CONST.AUTH}${CONST.SIGN_IN}`} />
       ) : (
-        <LinkButton title="サインアウト" onClick={onSignOut} />
+        <HeaderMenu onClick={onSignOut} />
       )}
     </>
   )
