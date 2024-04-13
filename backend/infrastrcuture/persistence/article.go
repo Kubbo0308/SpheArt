@@ -15,11 +15,12 @@ func NewArticlePersistence(db *gorm.DB) repository.ArticleRepository {
 	return &articlePersistence{db}
 }
 
+// 1ページあたりの記事数
+const pageSize = 20
+
 func (ap *articlePersistence) ArticlesPerPages(pageNum int) ([]model.Article, error) {
 	articles := []model.Article{}
-	// 1ページあたりの記事数
-	const pageSize = 30
-	// ページ番号から、OFFSETの計算を行います。ページ番号は1から始まる
+	// ページ番号から、OFFSETの計算を行う（ページ番号は1から始まる）
 	offset := (pageNum - 1) * pageSize
 	// LimitとOffsetメソッドを使ってページネーションを適用
 	res := ap.db.Limit(pageSize).Offset(offset).Find(&articles)
