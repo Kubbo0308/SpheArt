@@ -23,7 +23,7 @@ export const SearchInput = () => {
   return (
     <Stack spacing={4} display={isSearch ? 'block' : 'none'} pb="1%" bg="white.primary" w="100%" px="3%">
       <form onSubmit={onSubmitHandler}>
-        <InputGroup bg="gray.light" borderColor="gray.placehorder" borderRadius="15px">
+        <InputGroup bg="gray.light" borderColor="gray.placehorder" borderRadius="15px" maxW="722px" mx="auto">
           <InputLeftElement pointerEvents="none">
             <Search2Icon h="60%" color="gray.placeholder" />
           </InputLeftElement>

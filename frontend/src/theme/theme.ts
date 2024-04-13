@@ -12,9 +12,9 @@ export const theme = extendTheme({
     gray: {
       primary: "#cccccc",
       placeholder: "#a9a9a9",
-      border: "#e2e8f0",
       light: "#f7fafc",
-      accent: "#1a202c"
+      accent: "#1a202c",
+      pale: "#c0c0c0"
     },
     white: {
       primary: "#ffffff"
