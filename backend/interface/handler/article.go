@@ -47,10 +47,18 @@ func (ah *articleHandler) AllArticles(ctx echo.Context) error {
 }
 
 func (ah *articleHandler) SearchInArticleTitle(ctx echo.Context) error {
-	queryParam := ctx.QueryParam("title")
-	searchTitle := "%" + queryParam + "%"
+	queryParamTitle := ctx.QueryParam("title")
+	searchTitle := "%" + queryParamTitle + "%"
 
-	res, err := ah.au.SearchInArticleTitle(searchTitle)
+	queryParamPerPage := ctx.QueryParam("per_page")
+	perPage, err := strconv.Atoi(queryParamPerPage)
+	if err != nil {
+		// 変換に失敗した場合のエラーハンドリング
+		// 例えば、デフォルト値を設定する、エラーレスポンスを返すなど
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid per_page parameter"})
+	}
+
+	res, err := ah.au.SearchInArticleTitle(searchTitle, perPage)
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, err.Error())
 	}
