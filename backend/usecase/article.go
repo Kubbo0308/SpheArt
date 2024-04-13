@@ -8,7 +8,7 @@ import (
 type ArticleUsecase interface {
 	ArticlesPerPage(pageNum int) ([]model.Article, error)
 	AllArticles() ([]model.Article, error)
-	SearchInArticleTitle(searchTitle string) ([]model.Article, error)
+	SearchInArticleTitle(searchTitle string, pageNum int) ([]model.Article, error)
 }
 
 type articleUsecase struct {
@@ -35,8 +35,8 @@ func (au *articleUsecase) AllArticles() ([]model.Article, error) {
 	return articles, nil
 }
 
-func (au *articleUsecase) SearchInArticleTitle(searchTitle string) ([]model.Article, error) {
-	articles, err := au.ar.SearchInArticleTitle(searchTitle)
+func (au *articleUsecase) SearchInArticleTitle(searchTitle string, pageNum int) ([]model.Article, error) {
+	articles, err := au.ar.SearchInArticleTitle(searchTitle, pageNum)
 	if err != nil {
 		return []model.Article{}, err
 	}
