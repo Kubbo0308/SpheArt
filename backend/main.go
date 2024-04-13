@@ -1,6 +1,7 @@
 package main
 
 import (
+	"backend/batch"
 	"backend/database"
 	"backend/di"
 	"backend/router"
@@ -21,7 +22,7 @@ func main() {
 	// fmt.Println("Start!")
 
 	// go func() {
-	// 	batch.RunQiitaAPIBatch(db)
+	batch.RunQiitaAPIBatch(db)
 	// 	ch1 <- true
 	// }()
 
