@@ -2,6 +2,7 @@ package batch
 
 import (
 	"backend/domain/model"
+	"backend/utils"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -39,6 +40,7 @@ func RunZennAPIBatch(db *gorm.DB) {
 	}
 }
 
+// Zenn APIから記事を取得する
 func GetZennArticleFromAPI(jsonData *model.ZennResponse) error {
 	res, err := http.Get(`https://zenn.dev/api/articles?page=1&per_page=100`)
 	if err != nil {
@@ -59,13 +61,21 @@ func GetZennArticleFromAPI(jsonData *model.ZennResponse) error {
 	return nil
 }
 
+// 型を変換する
 func ConvertZennResponsesToArticles(zennResponses []model.ZennArticles) []model.Article {
 	var articles []model.Article
 	for _, zennResp := range zennResponses {
+		// URLからOGP画像のURL取得
+		ogpImageUrl, err := utils.GetOGPImageFromURL(zennResp.GetUrl())
+		if err != nil {
+			ogpImageUrl = ""
+		}
+
 		articles = append(articles, model.Article{
 			ID:                zennResp.GetId(),
 			Title:             zennResp.Title,
 			Url:               zennResp.GetUrl(),
+			OgpImageUrl:       ogpImageUrl,
 			CreatedAt:         zennResp.PublishedAt,
 			UpdatedAt:         zennResp.BodyUpdatedAt,
 			PublisherId:       zennResp.GetUserId(),
