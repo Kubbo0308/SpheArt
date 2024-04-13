@@ -2,6 +2,7 @@ package batch
 
 import (
 	"backend/domain/model"
+	"backend/utils"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -40,6 +41,7 @@ func RunQiitaAPIBatch(db *gorm.DB) {
 	}
 }
 
+// Qiita APIから記事を取得する
 func GetQiitaArticleFromAPI(jsonData *[]model.QiitaResponse) error {
 	res, err := http.Get(`https://qiita.com/api/v2/items?page=1&per_page=100`)
 	if err != nil {
@@ -60,13 +62,21 @@ func GetQiitaArticleFromAPI(jsonData *[]model.QiitaResponse) error {
 	return nil
 }
 
+// 型を変換する
 func ConvertQiitaResponsesToArticles(qiitaResponses []model.QiitaResponse) []model.Article {
 	var articles []model.Article
 	for _, qiitaResp := range qiitaResponses {
+		// URLからOGP画像のURL取得
+		ogpImageUrl, err := utils.GetOGPImageFromURL(qiitaResp.Url)
+		if err != nil {
+			ogpImageUrl = ""
+		}
+
 		articles = append(articles, model.Article{
 			ID:                qiitaResp.Id,
 			Title:             qiitaResp.Title,
 			Url:               qiitaResp.Url,
+			OgpImageUrl:       ogpImageUrl,
 			CreatedAt:         qiitaResp.CreatedAt,
 			UpdatedAt:         qiitaResp.UpdatedAt,
 			PublisherId:       qiitaResp.User.UserId,

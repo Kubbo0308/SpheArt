@@ -20,6 +20,7 @@ services:
             - frontend_network
         environment:
             - WATCHPACK_POLLING=true
+
     backend:
         container_name: backend
         build: ./backend

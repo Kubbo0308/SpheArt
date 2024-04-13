@@ -6,6 +6,7 @@ type Article struct {
 	ID                string     `json:"id" gorm:"primaryKey"`
 	Title             string     `json:"title"`
 	Url               string     `json:"url"`
+	OgpImageUrl       string     `json:"ogp_image_url"`
 	CreatedAt         time.Time  `json:"created_at"`
 	UpdatedAt         time.Time  `json:"updated_at"`
 	PublisherId       string     `json:"publisher_id"`
