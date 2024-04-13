@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, Skeleton } from '@chakra-ui/react'
 
 export const ArticleSkeleton = () => {
   return (
@@ -11,12 +11,12 @@ export const ArticleSkeleton = () => {
       border="2px"
       borderColor="gray.primary"
     >
-      <Box bg="gray.pale" h="180px" borderBottom="2px" borderColor="gray.primary" />
+      <Skeleton height="180px" />
       <Box p="10px" h="110px">
-        <Box h="15px" bg="gray.primary" mt="10px" />
+        <Skeleton height="15px" mt="10px" />
         <Flex mt="50px" justifyContent="space-between">
-          <Box h="15px" bg="gray.primary" w="150px" />
-          <Box h="15px" bg="gray.primary" w="50px" />
+          <Skeleton height="15px" width="150px" />
+          <Skeleton height="15px" width="50px" />
         </Flex>
       </Box>
     </Box>
