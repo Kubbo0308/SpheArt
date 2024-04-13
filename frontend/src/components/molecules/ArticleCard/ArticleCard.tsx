@@ -28,14 +28,24 @@ export const ArticleCard = (props: ArticleCardProps) => {
   const { isBookmark, postBookmark, formatDate } = useArticleCard(token)
 
   return (
-    <Box borderRadius="8px" overflow="hidden" boxShadow="sm" bg="white.primary" w="320px">
+    <Box
+      borderRadius="8px"
+      overflow="hidden"
+      boxShadow="sm"
+      bg="white.primary"
+      w="320px"
+      border="2px"
+      borderColor="gray.primary"
+    >
       <Image
         // src={article.publisher_image_url}
         src="/no_image.svg"
         alt={article.publisher_name}
         h="180px"
+        borderBottom="2px"
+        borderColor="gray.primary"
       />
-      <Box p="10px">
+      <Box p="10px" h="110px">
         <Text fontSize="16px" fontWeight={700} lineHeight={1.8}>
           <Link href={article.url} isExternal color="teal.500">
             {article.title}
