@@ -6,14 +6,16 @@ import { MutableRefObject, useCallback, useEffect, useRef, useState } from "reac
 interface returnValue {
   articles: ArticleProps[]
   loader: MutableRefObject<HTMLDivElement | null>
+  isVisible: boolean
 }
 
 export const useTopPageHooks = (): returnValue => {
   const [ offset, setOffset ] = useState(1)
   const [ articles, setArticles ] = useState<ArticleProps[]>([])
   const loader = useRef<HTMLDivElement | null>(null)
+  const [ isVisible, setIsVisible ] = useState(true)
 
-  const handleObserver = useCallback((entities: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+  const handleObserver = useCallback((entities: IntersectionObserverEntry[]) => {
     const target = entities[0]
     if (target.isIntersecting) {
       setOffset((prev) => prev + 1)
@@ -25,6 +27,9 @@ export const useTopPageHooks = (): returnValue => {
       const { data, status } = await getArticles(offset)
       switch (status) {
         case STATUS_CODE.OK:
+          if (data.length === 0) {
+            setIsVisible(false)
+          }
           setArticles((prev) => [...prev, ...data])
           break // 成功時の処理が完了したらbreakを忘れずに
         default:
@@ -49,5 +54,5 @@ export const useTopPageHooks = (): returnValue => {
     };
   }, [handleObserver]);
 
-  return { articles, loader }
+  return { articles, loader, isVisible }
 }

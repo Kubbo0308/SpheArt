@@ -12,12 +12,12 @@ interface TopPageProps {
 
 export const TopPage = (props: TopPageProps) => {
   const { token } = props
-  const { articles, loader } = useTopPageHooks()
+  const { articles, loader, isVisible } = useTopPageHooks()
   return (
     <Container maxW="container.md" py="5%">
       <ArticleList articles={articles} token={token} />
       <Box ref={loader} h="1px" mt="19px" />
-      <Loading />
+      {isVisible && <Loading />}
     </Container>
   )
 }
