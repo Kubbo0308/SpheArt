@@ -39,9 +39,11 @@ func (ap *articlePersistence) AllArticles() ([]model.Article, error) {
 	return articles, nil
 }
 
-func (ap *articlePersistence) SearchInArticleTitle(searchTitle string) ([]model.Article, error) {
+func (ap *articlePersistence) SearchInArticleTitle(searchTitle string, pageNum int) ([]model.Article, error) {
 	articles := []model.Article{}
-	res := ap.db.Where("title LIKE ?", searchTitle).Find(&articles)
+	// ページ番号から、OFFSETの計算を行う（ページ番号は1から始まる）
+	offset := (pageNum - 1) * pageSize
+	res := ap.db.Where("title LIKE ?", searchTitle).Limit(pageSize).Offset(offset).Find(&articles)
 	if res.Error != nil {
 		return []model.Article{}, res.Error
 	}
