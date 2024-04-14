@@ -28,6 +28,11 @@ func (uu *userUsecase) SignUp(user model.User) (model.UserResponse, error) {
 	if err != nil {
 		return model.UserResponse{}, err
 	}
+	// 既に同じメールアドレスを持つユーザーが存在するかチェック
+	existingUser := model.User{}
+	if err := uu.ur.UserByEmail(&existingUser, user.Email); err == nil {
+		return model.UserResponse{}, model.ErrUserAlreadyExists
+	}
 	newUser := model.User{Email: user.Email, Password: string(hash)}
 	if err := uu.ur.CreateUser(&newUser); err != nil {
 		return model.UserResponse{}, err
