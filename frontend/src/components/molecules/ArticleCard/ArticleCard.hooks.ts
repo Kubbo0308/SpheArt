@@ -27,7 +27,7 @@ export const useArticleCard = (token: RequestCookie | undefined): returnValue =>
         break
     }
   } else {
-    alert("ブックマークするにはログインしてください。")
+    alert("ブックマークするにはサインインしてください。")
     router.push(`${CONST.AUTH}${CONST.SIGN_IN}`)
   }
   }

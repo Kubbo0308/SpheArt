@@ -1,26 +1,36 @@
-
 import { GetBookmark } from "@/api/bookmark"
 import { ArticleProps } from "@/components/molecules/ArticleCard/ArticleCard"
 import { STATUS_CODE } from "@/const"
-import { useEffect, useState } from "react"
+import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react"
 
 interface returnValue {
-  currentPage: number
   articles: ArticleProps[]
-  goNextPage: () => void
-  backPreviousPage: () => void
+  loader: MutableRefObject<HTMLDivElement | null>
+  isVisible: boolean
 }
 
 export const useBookmarkPageHooks = (): returnValue => {
-  const [ currentPage, setCurrentPage ] = useState(1)
+  const [ offset, setOffset ] = useState(1)
   const [ articles, setArticles ] = useState<ArticleProps[]>([])
+  const loader = useRef<HTMLDivElement | null>(null)
+  const [ isVisible, setIsVisible ] = useState(true)
+
+  const handleObserver = useCallback((entities: IntersectionObserverEntry[]) => {
+    const target = entities[0]
+    if (target.isIntersecting) {
+      setOffset((prev) => prev + 1)
+    }
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, status } = await GetBookmark(currentPage)
+      const { data, status } = await GetBookmark(offset)
       switch (status) {
         case STATUS_CODE.OK:
-          setArticles(data)
+          if (data.length === 0) {
+            setIsVisible(false)
+          }
+          setArticles((prev) => [...prev, ...data])
           break // 成功時の処理が完了したらbreakを忘れずに
         default:
           alert(status)
@@ -29,15 +39,20 @@ export const useBookmarkPageHooks = (): returnValue => {
     }
 
     fetchData()
-  }, [currentPage])
+  }, [offset])
 
-  const goNextPage = () => {
-    setCurrentPage(currentPage + 1)
-  }
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleObserver, {
+      root: null,
+      rootMargin: "20px",
+      threshold: 0.5
+    });
+    if (loader.current) observer.observe(loader.current);
 
-  const backPreviousPage = () => {
-    setCurrentPage(currentPage - 1)
-  }
+    return () => {
+      observer.disconnect();
+    };
+  }, [handleObserver]);
 
-  return { currentPage, articles, goNextPage, backPreviousPage }
+  return { articles, loader, isVisible }
 }

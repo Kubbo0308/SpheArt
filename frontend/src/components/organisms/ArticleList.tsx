@@ -1,19 +1,6 @@
 import { Flex } from '@chakra-ui/react'
-import { ArticleCard } from '../molecules/ArticleCard/ArticleCard'
+import { ArticleCard, ArticleProps } from '../molecules/ArticleCard/ArticleCard'
 import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
-
-type ArticleProps = {
-  id: number
-  title: string
-  url: string
-  created_at: string
-  updated_at: string
-  publisher_id: string
-  publisher_name: string
-  publisher_image_url: string
-  likes_count: number
-  quote_source: string
-}
 
 type ArticleListProps = {
   articles: ArticleProps[]
