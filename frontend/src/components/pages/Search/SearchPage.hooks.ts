@@ -1,6 +1,7 @@
-import { GetBookmark } from "@/api/bookmark"
+import { searchArticlesInTitle } from "@/api/article"
 import { ArticleProps } from "@/components/molecules/ArticleCard/ArticleCard"
 import { STATUS_CODE } from "@/const"
+import { useSearchParams } from "next/navigation"
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react"
 
 interface returnValue {
@@ -9,11 +10,13 @@ interface returnValue {
   isVisible: boolean
 }
 
-export const useBookmarkPageHooks = (): returnValue => {
+export const useSearchPageHooks = (): returnValue => {
   const [ offset, setOffset ] = useState(1)
   const [ articles, setArticles ] = useState<ArticleProps[]>([])
   const loader = useRef<HTMLDivElement | null>(null)
   const [ isVisible, setIsVisible ] = useState(true)
+  const searchParams = useSearchParams()
+  const title = searchParams.get('title')
 
   const handleObserver = useCallback((entities: IntersectionObserverEntry[]) => {
     const target = entities[0]
@@ -24,7 +27,7 @@ export const useBookmarkPageHooks = (): returnValue => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, status } = await GetBookmark(offset)
+      const { data, status } = await searchArticlesInTitle(title || "", offset)
       switch (status) {
         case STATUS_CODE.OK:
           if (data.length === 0) {
@@ -39,7 +42,7 @@ export const useBookmarkPageHooks = (): returnValue => {
     }
 
     fetchData()
-  }, [offset])
+  }, [title, offset])
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleObserver, {

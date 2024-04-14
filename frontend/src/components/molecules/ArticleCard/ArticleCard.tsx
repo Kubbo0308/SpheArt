@@ -9,6 +9,7 @@ export type ArticleProps = {
   id: number
   title: string
   url: string
+  ogp_image_url: string
   created_at: string
   updated_at: string
   publisher_id: string
@@ -21,11 +22,12 @@ export type ArticleProps = {
 type ArticleCardProps = {
   article: ArticleProps
   token: RequestCookie | undefined
+  isBookmarkPage: boolean
 }
 
 export const ArticleCard = (props: ArticleCardProps) => {
-  const { article, token } = props
-  const { isBookmark, postBookmark, formatDate } = useArticleCard(token)
+  const { article, token, isBookmarkPage } = props
+  const { isBookmark, postBookmark, formatDate } = useArticleCard({ token, isBookmarkPage })
 
   return (
     <Box
@@ -37,21 +39,22 @@ export const ArticleCard = (props: ArticleCardProps) => {
       border="2px"
       borderColor="gray.primary"
     >
-      <Image
-        // src={article.publisher_image_url}
-        src="/no_image.svg"
-        alt={article.publisher_name}
-        h="180px"
-        borderBottom="2px"
-        borderColor="gray.primary"
-      />
-      <Box p="10px" h="110px">
-        <Text fontSize="16px" fontWeight={700} lineHeight={1.8}>
-          <Link href={article.url} isExternal color="teal.500">
+      <Link href={article.url} isExternal>
+        <Image
+          src={article.ogp_image_url !== '' ? article.ogp_image_url : '/no_image.svg'}
+          alt={article.publisher_name}
+          h="180px"
+          borderBottom="2px"
+          borderColor="gray.primary"
+        />
+      </Link>
+      <Flex p="10px" h="110px" direction="column">
+        <Text fontSize="16px" fontWeight={700} lineHeight={1.8} color="teal.500" maxH="57px" overflow="hidden">
+          <Link href={article.url} isExternal>
             {article.title}
           </Link>
         </Text>
-        <Flex mt="10px" justifyContent="space-between" alignItems="center">
+        <Flex justifyContent="space-between" mt="auto">
           <Text fontSize="16px" fontWeight={500}>
             {formatDate(article.created_at)}
           </Text>
@@ -65,7 +68,7 @@ export const ArticleCard = (props: ArticleCardProps) => {
             <BookmarkButton onClick={() => postBookmark(String(article.id))} isBookmark={isBookmark} />
           </Flex>
         </Flex>
-      </Box>
+      </Flex>
     </Box>
   )
 }

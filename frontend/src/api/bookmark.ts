@@ -9,9 +9,6 @@ export async function GetBookmark(pageNum: number) {
     cache: 'no-cache',
     credentials: "include", // Cookieを含める
   })
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
   const data = await res.json()
   return { status: res.status, data: data }
 }
@@ -24,9 +21,6 @@ export async function PostBookmark(articleId: string) {
     },
     credentials: "include", // Cookieを含める
   })
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
   const data = await res.json()
   return { status: res.status, data: data }
 }

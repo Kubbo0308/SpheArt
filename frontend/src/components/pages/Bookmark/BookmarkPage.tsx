@@ -1,18 +1,28 @@
 'use client'
 
 import { ArticleList } from '@/components/organisms/ArticleList'
-import { Button, Container, Flex } from '@chakra-ui/react'
+import { Box, Container, Text } from '@chakra-ui/react'
 import { useBookmarkPageHooks } from './Bookmark.hooks'
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
+import { Loading } from '@/components/molecules/Loading'
 
-export const BookmarkPage = () => {
-  const { articles, goNextPage, backPreviousPage } = useBookmarkPageHooks()
+interface BookmarkPageProps {
+  token: RequestCookie | undefined
+}
+
+export const BookmarkPage = (props: BookmarkPageProps) => {
+  const { token } = props
+  const { articles, loader, isVisible } = useBookmarkPageHooks()
   return (
-    <Container maxW="container.md" py="5%">
-      <ArticleList articles={articles} token={undefined} />
-      <Flex gap="20px">
-        <Button onClick={backPreviousPage}>前へ</Button>
-        <Button onClick={goNextPage}>次へ</Button>
-      </Flex>
-    </Container>
+    <>
+      <Text fontSize="32px" fontWeight={600} lineHeight={1.8} mt="30px" textAlign="center">
+        ブックマークした記事
+      </Text>
+      <Container maxW="container.md" py="5%">
+        <ArticleList articles={articles} token={token} isBookmarkPage={true} />
+        <Box ref={loader} h="1px" mt="19px" />
+        {isVisible && <Loading />}
+      </Container>
+    </>
   )
 }
