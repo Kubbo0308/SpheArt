@@ -1,6 +1,7 @@
 import { searchArticlesInTitle } from "@/api/article"
 import { ArticleProps } from "@/components/molecules/ArticleCard/ArticleCard"
 import { STATUS_CODE } from "@/const"
+import { useSearchParams } from "next/navigation"
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react"
 
 interface returnValue {
@@ -9,21 +10,13 @@ interface returnValue {
   isVisible: boolean
 }
 
-export const useSearchPageHooks = (title: string | string[] | undefined): returnValue => {
+export const useSearchPageHooks = (): returnValue => {
   const [ offset, setOffset ] = useState(1)
   const [ articles, setArticles ] = useState<ArticleProps[]>([])
   const loader = useRef<HTMLDivElement | null>(null)
   const [ isVisible, setIsVisible ] = useState(true)
-
-  let searchTitle
-
-  if (typeof title === "string") {
-    searchTitle = title
-  } else if (Array.isArray(title)) {
-    searchTitle = title[0] || ""
-  } else {
-    searchTitle = ""
-  }
+  const searchParams = useSearchParams()
+  const title = searchParams.get('title')
 
   const handleObserver = useCallback((entities: IntersectionObserverEntry[]) => {
     const target = entities[0]
@@ -34,7 +27,7 @@ export const useSearchPageHooks = (title: string | string[] | undefined): return
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, status } = await searchArticlesInTitle(searchTitle, offset)
+      const { data, status } = await searchArticlesInTitle(title || "", offset)
       switch (status) {
         case STATUS_CODE.OK:
           if (data.length === 0) {
@@ -49,7 +42,7 @@ export const useSearchPageHooks = (title: string | string[] | undefined): return
     }
 
     fetchData()
-  }, [searchTitle, offset])
+  }, [title, offset])
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleObserver, {

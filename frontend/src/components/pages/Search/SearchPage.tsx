@@ -8,12 +8,11 @@ import { Loading } from '@/components/molecules/Loading'
 
 interface SearchPageProps {
   token: RequestCookie | undefined
-  title: string | string[] | undefined
 }
 
 export const SearchPage = (props: SearchPageProps) => {
-  const { token, title } = props
-  const { articles, loader, isVisible } = useSearchPageHooks(title)
+  const { token } = props
+  const { articles, loader, isVisible } = useSearchPageHooks()
   return (
     <Container maxW="container.md" py="5%">
       <ArticleList articles={articles} token={token} />
