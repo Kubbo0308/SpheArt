@@ -15,7 +15,7 @@ export const BookmarkPage = (props: BookmarkPageProps) => {
   const { articles, loader, isVisible } = useBookmarkPageHooks()
   return (
     <Container maxW="container.md" py="5%">
-      <ArticleList articles={articles} token={token} />
+      <ArticleList articles={articles} token={token} isBookmarkPage={true} />
       <Box ref={loader} h="1px" mt="19px" />
       {isVisible && <Loading />}
     </Container>

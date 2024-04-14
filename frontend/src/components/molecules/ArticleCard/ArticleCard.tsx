@@ -22,11 +22,12 @@ export type ArticleProps = {
 type ArticleCardProps = {
   article: ArticleProps
   token: RequestCookie | undefined
+  isBookmarkPage: boolean
 }
 
 export const ArticleCard = (props: ArticleCardProps) => {
-  const { article, token } = props
-  const { isBookmark, postBookmark, formatDate } = useArticleCard(token)
+  const { article, token, isBookmarkPage } = props
+  const { isBookmark, postBookmark, formatDate } = useArticleCard({ token, isBookmarkPage })
 
   return (
     <Box

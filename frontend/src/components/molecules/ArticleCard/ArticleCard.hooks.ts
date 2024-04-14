@@ -5,15 +5,21 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { PostBookmark } from '@/api/bookmark';
 
+interface useArticleCardProps {
+  token: RequestCookie | undefined
+  isBookmarkPage: boolean
+}
+
 interface returnValue {
   isBookmark: boolean
   postBookmark: (articleId: string) => Promise<void>
   formatDate: (dateString: string) => string
 }
 
-export const useArticleCard = (token: RequestCookie | undefined): returnValue => {
+export const useArticleCard = (props: useArticleCardProps): returnValue => {
+  const { token, isBookmarkPage } = props
   const isLogin = token !== undefined
-  const [isBookmark, setIsBookmark] = useState(false)
+  const [isBookmark, setIsBookmark] = useState(isBookmarkPage)
   const router = useRouter()
 
   const postBookmark = async (articleId: string) => {
