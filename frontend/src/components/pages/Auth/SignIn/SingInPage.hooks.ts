@@ -67,6 +67,9 @@ export const useSignInPage = (): returnValue => {
         router.push(CONST.TOP)
         window.location.reload()
         break // 成功時の処理が完了したらbreakを忘れずに
+      case STATUS_CODE.UNAUTHORIZED:
+        alert('メールアドレスかパスワードが間違っています😭')
+        break
       default:
         alert(status)
         break
