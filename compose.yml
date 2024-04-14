@@ -1,0 +1,64 @@
+services:
+    frontend:
+        container_name: frontend
+        build: ./frontend
+        tty: true
+        ports:
+            - "3000:3000"
+        depends_on:
+            - backend
+        volumes:
+            - type: bind
+              source: ./frontend
+              target: /src/app
+            - type: volume
+              # 名前付きボリュームにすることでホストマシンと同期させない
+              source: node_modules
+              target: /src/app/node_modules
+        command: "npm run dev"
+        networks:
+            - frontend_network
+        environment:
+            - WATCHPACK_POLLING=true
+
+    backend:
+        container_name: backend
+        build: ./backend
+        tty: true
+        ports:
+            - "8080:8080"
+        depends_on:
+            - db
+        volumes:
+            - type: bind
+              source: ./backend
+              target: /go/src/app
+        env_file:
+            - .env
+        networks:
+            - frontend_network
+            - backend_network
+
+    db:
+        container_name: db
+        build: ./db
+        tty: true
+        platform: linux/x86_64
+        ports:
+            - 3306:3306
+        env_file:
+            - .env
+        volumes:
+            - db_volume:/var/lib/mysql
+        networks:
+            - backend_network
+
+volumes:
+    db_volume:
+    node_modules:
+
+networks:
+    frontend_network:
+        external: true
+    backend_network:
+        external: true
