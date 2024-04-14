@@ -6,8 +6,8 @@ import { Header } from '@/components/organisms/Header/Header'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Tech Pulse',
-  description: '技術記事のまとめサイト'
+  title: 'SpheArt | 技術記事のまとめサイト',
+  description: '技術記事のまとめサイトです。QiitaやZennから記事を取得してます。'
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
