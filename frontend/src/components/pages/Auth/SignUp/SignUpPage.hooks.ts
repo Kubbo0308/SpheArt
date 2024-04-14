@@ -71,7 +71,7 @@ export const useSignUpPage = (): returnValue => {
     switch (status) {
       case STATUS_CODE.CREATED:
         // 新規登録成功時
-        alert('成功！')
+        alert('新規登録完了！')
         const { status } = await SignIn(email, password)
         switch (status) {
           case STATUS_CODE.OK:
@@ -81,6 +81,9 @@ export const useSignUpPage = (): returnValue => {
           default:
             break
         }
+        break
+      case STATUS_CODE.CONFLICT:
+        alert('このメールアドレスは既に存在しています😭')
         break
       default:
         alert('失敗！')
