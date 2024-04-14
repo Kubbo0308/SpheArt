@@ -11,9 +11,6 @@ export async function SignUp(email: string, password: string) {
       password: password
     }),
   })
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
   const data = await res.json()
   return { status: res.status, data: data }
 }
@@ -30,9 +27,6 @@ export async function SignIn(email: string, password: string) {
     }),
     credentials: "include", // Cookieを含める
   })
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
   const data = await res.json()
   return { status: res.status, data: data }
 }
@@ -45,8 +39,5 @@ export async function SignOut() {
     },
     credentials: "include", // Cookieを含める
   })
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
   return { status: res.status }
 }
