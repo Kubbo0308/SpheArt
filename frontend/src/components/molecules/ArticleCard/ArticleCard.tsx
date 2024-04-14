@@ -29,16 +29,16 @@ export const ArticleCard = (props: ArticleCardProps) => {
   const { isBookmark, postBookmark, formatDate } = useArticleCard(token)
 
   return (
-    <Link href={article.url} isExternal>
-      <Box
-        borderRadius="8px"
-        overflow="hidden"
-        boxShadow="sm"
-        bg="white.primary"
-        w="320px"
-        border="2px"
-        borderColor="gray.primary"
-      >
+    <Box
+      borderRadius="8px"
+      overflow="hidden"
+      boxShadow="sm"
+      bg="white.primary"
+      w="320px"
+      border="2px"
+      borderColor="gray.primary"
+    >
+      <Link href={article.url} isExternal>
         <Image
           src={article.ogp_image_url !== '' ? article.ogp_image_url : '/no_image.svg'}
           alt={article.publisher_name}
@@ -46,26 +46,28 @@ export const ArticleCard = (props: ArticleCardProps) => {
           borderBottom="2px"
           borderColor="gray.primary"
         />
-        <Flex p="10px" h="110px" direction="column">
-          <Text fontSize="16px" fontWeight={700} lineHeight={1.8} color="teal.500" maxH="57px" overflow="hidden">
+      </Link>
+      <Flex p="10px" h="110px" direction="column">
+        <Text fontSize="16px" fontWeight={700} lineHeight={1.8} color="teal.500" maxH="57px" overflow="hidden">
+          <Link href={article.url} isExternal>
             {article.title}
+          </Link>
+        </Text>
+        <Flex justifyContent="space-between" mt="auto">
+          <Text fontSize="16px" fontWeight={500}>
+            {formatDate(article.created_at)}
           </Text>
-          <Flex justifyContent="space-between" mt="auto">
-            <Text fontSize="16px" fontWeight={500}>
-              {formatDate(article.created_at)}
-            </Text>
-            <Flex gap="10px" alignItems="center">
-              <Flex gap="3px" alignItems="center">
-                <Image src="/heart_256.svg" alt="" w="16px" h="16px" />
-                <Text fontSize="16px" fontWeight={500}>
-                  {article.likes_count}
-                </Text>
-              </Flex>
-              <BookmarkButton onClick={() => postBookmark(String(article.id))} isBookmark={isBookmark} />
+          <Flex gap="10px" alignItems="center">
+            <Flex gap="3px" alignItems="center">
+              <Image src="/heart_256.svg" alt="" w="16px" h="16px" />
+              <Text fontSize="16px" fontWeight={500}>
+                {article.likes_count}
+              </Text>
             </Flex>
+            <BookmarkButton onClick={() => postBookmark(String(article.id))} isBookmark={isBookmark} />
           </Flex>
         </Flex>
-      </Box>
-    </Link>
+      </Flex>
+    </Box>
   )
 }
