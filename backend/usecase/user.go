@@ -3,11 +3,13 @@ package usecase
 import (
 	"backend/domain/model"
 	"backend/domain/repository"
+	"errors"
 	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 type UserUsecase interface {
@@ -47,11 +49,17 @@ func (uu *userUsecase) SignUp(user model.User) (model.UserResponse, error) {
 func (uu *userUsecase) SignIn(user model.User) (string, error) {
 	checkUser := model.User{}
 	if err := uu.ur.UserByEmail(&checkUser, user.Email); err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			// ユーザーが見つからない場合の一般的な認証失敗エラー
+			return "", model.ErrAuthenticationFailure
+		}
+		// その他のデータベースエラーなど
 		return "", err
 	}
 	err := bcrypt.CompareHashAndPassword([]byte(checkUser.Password), []byte(user.Password))
 	if err != nil {
-		return "", err
+		// パスワードが間違っている場合も認証失敗エラー
+		return "", model.ErrAuthenticationFailure
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user_id": checkUser.ID,
@@ -59,7 +67,8 @@ func (uu *userUsecase) SignIn(user model.User) (string, error) {
 	})
 	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
 	if err != nil {
-		return "", err
+		// JWT生成失敗の抽象化したエラーメッセージ
+		return "", errors.New("failed to generate token")
 	}
 	return tokenString, err
 }
