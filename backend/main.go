@@ -9,7 +9,8 @@ import (
 
 func main() {
 	fmt.Println("run!!!")
-	db := database.NewDB()
+	// db := database.NewMySQLDB()
+	db := database.NewPostgreSQLDB()
 	defer database.CloseDB(db)
 
 	// ticker := time.NewTicker(3 * time.Hour)
