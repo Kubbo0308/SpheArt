@@ -5,11 +5,12 @@ export const ArticleSkeleton = () => {
     <Box
       borderRadius="8px"
       overflow="hidden"
-      boxShadow="sm"
+      boxShadow="lg"
       bg="white.primary"
       w="320px"
-      border="2px"
+      border="1px 0px 0px 1px"
       borderColor="gray.primary"
+      opacity={0.3}
     >
       <Skeleton height="180px" />
       <Box p="10px" h="110px">

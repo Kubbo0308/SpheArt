@@ -6,6 +6,10 @@ export const Loading = () => {
     <Flex flexWrap="wrap" gap="20px" justifyContent="center">
       <ArticleSkeleton />
       <ArticleSkeleton />
+      <ArticleSkeleton />
+      <ArticleSkeleton />
+      <ArticleSkeleton />
+      <ArticleSkeleton />
     </Flex>
   )
 }
