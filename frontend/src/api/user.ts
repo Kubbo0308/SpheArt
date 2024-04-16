@@ -1,7 +1,7 @@
 import { CONST } from "@/const"
 
 export async function SignUp(email: string, password: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${CONST.SIGN_UP}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${CONST.SIGN_UP}`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ export async function SignUp(email: string, password: string) {
 }
 
 export async function SignIn(email: string, password: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${CONST.SIGN_IN}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${CONST.SIGN_IN}`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ export async function SignIn(email: string, password: string) {
 }
 
 export async function SignOut() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${CONST.SIGN_OUT}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${CONST.SIGN_OUT}`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',

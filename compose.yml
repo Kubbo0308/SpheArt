@@ -28,7 +28,8 @@ services:
         ports:
             - "8080:8080"
         depends_on:
-            - db
+            - mysql
+            - postgresql
         volumes:
             - type: bind
               source: ./backend
@@ -39,9 +40,9 @@ services:
             - frontend_network
             - backend_network
 
-    db:
-        container_name: db
-        build: ./db
+    mysql:
+        container_name: mysql
+        build: ./mysql
         tty: true
         platform: linux/x86_64
         ports:
@@ -53,8 +54,21 @@ services:
         networks:
             - backend_network
 
+    postgresql:
+        image: postgres:14-alpine
+        container_name: postgresql
+        ports:
+            - 5432:5432
+        volumes:
+            - postgresql_volume:/var/lib/postgresql/data
+        env_file:
+            - .env
+        networks:
+            - backend_network
+
 volumes:
     db_volume:
+    postgresql_volume:
     node_modules:
 
 networks:

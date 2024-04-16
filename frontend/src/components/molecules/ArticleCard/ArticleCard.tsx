@@ -33,10 +33,10 @@ export const ArticleCard = (props: ArticleCardProps) => {
     <Box
       borderRadius="8px"
       overflow="hidden"
-      boxShadow="sm"
+      boxShadow="lg"
       bg="white.primary"
       w="320px"
-      border="2px"
+      border="1px 0px 0px 1px"
       borderColor="gray.primary"
     >
       <Link href={article.url} isExternal>
@@ -44,7 +44,7 @@ export const ArticleCard = (props: ArticleCardProps) => {
           src={article.ogp_image_url !== '' ? article.ogp_image_url : '/no_image.svg'}
           alt={article.publisher_name}
           h="180px"
-          borderBottom="2px"
+          borderBottom="1px"
           borderColor="gray.primary"
         />
       </Link>
