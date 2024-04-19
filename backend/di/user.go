@@ -2,7 +2,7 @@ package di
 
 import (
 	"backend/infrastrcuture/persistence"
-	"backend/interface/handler"
+	handler "backend/interface/handler/echo"
 	"backend/usecase"
 
 	"gorm.io/gorm"

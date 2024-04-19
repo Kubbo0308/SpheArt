@@ -1,7 +1,7 @@
 package router
 
 import (
-	"backend/interface/handler"
+	handler "backend/interface/handler/echo"
 	"os"
 
 	echojwt "github.com/labstack/echo-jwt/v4"
