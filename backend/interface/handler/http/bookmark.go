@@ -79,6 +79,9 @@ func (bh *bookmarkHandler) AllBookmark(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(res)
+	if err != nil {
+		http.Error(w, "Failed to encode response: "+err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func (bh *bookmarkHandler) PostBookmark(w http.ResponseWriter, r *http.Request) {
@@ -106,4 +109,7 @@ func (bh *bookmarkHandler) PostBookmark(w http.ResponseWriter, r *http.Request) 
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(res)
+	if err != nil {
+		http.Error(w, "Failed to encode response: "+err.Error(), http.StatusInternalServerError)
+	}
 }

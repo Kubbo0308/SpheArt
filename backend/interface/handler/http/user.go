@@ -47,6 +47,9 @@ func (uh *userHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(res)
+	if err != nil {
+		http.Error(w, "Failed to encode response: "+err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func (uh *userHandler) SignIn(w http.ResponseWriter, r *http.Request) {
@@ -77,6 +80,9 @@ func (uh *userHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, cookie)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(tokenString)
+	if err != nil {
+		http.Error(w, "Failed to encode response: "+err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func (uh *userHandler) SignOut(w http.ResponseWriter, r *http.Request) {
