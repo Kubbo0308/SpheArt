@@ -1,0 +1,15 @@
+{
+  "build": {
+    "env": {
+      "GO_BUILD_FLAGS": "-ldflags '-s -w'"
+    }
+  },
+  "routes": [
+    { "src": "/api/articles", "dest": "/api/articles" },
+    { "src": "/api/articles/search", "dest": "/api/articles/search" },
+    { "src": "/api/signup", "dest": "/api/signup" },
+    { "src": "/api/signin", "dest": "/api/signin" },
+    { "src": "/api/signout", "dest": "/api/signout" },
+    { "src": "/api/bookmark", "dest": "/api/bookmark" }
+  ]
+}

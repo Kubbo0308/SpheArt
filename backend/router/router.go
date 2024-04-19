@@ -1,7 +1,7 @@
 package router
 
 import (
-	"backend/interface/handler"
+	handler "backend/interface/handler/echo"
 	"os"
 
 	echojwt "github.com/labstack/echo-jwt/v4"
@@ -23,13 +23,13 @@ func NewRouter(ah handler.ArticleHandler, uh handler.UserHandler, bh handler.Boo
 		AllowCredentials: true,
 	}))
 
-	e.GET("/articles", ah.ArticlesPerPage)
-	e.GET("/articles/all", ah.AllArticles)
-	e.GET("/articles/search", ah.SearchInArticleTitle)
-	e.POST("/signup", uh.SignUp)
-	e.POST("/signin", uh.SignIn)
-	e.POST("/signout", uh.SignOut)
-	b := e.Group("/bookmark")
+	e.GET("/api/articles", ah.ArticlesPerPage)
+	e.GET("//apiarticles/all", ah.AllArticles)
+	e.GET("/api/articles/search", ah.SearchInArticleTitle)
+	e.POST("/api/signup", uh.SignUp)
+	e.POST("/api/signin", uh.SignIn)
+	e.POST("/api/signout", uh.SignOut)
+	b := e.Group("/api/bookmark")
 	// bookmarkエンドポイントにミドルウェア追加
 	b.Use(echojwt.WithConfig(echojwt.Config{
 		// jwtを生成した時と同じSECRET_KEYを指定
