@@ -12,7 +12,7 @@
     { "src": "/api/signout", "dest": "/api/signout" },
     { "src": "/api/bookmark", "dest": "/api/bookmark" },
     { "src": "/api/batch/qiita", "dest": "/api/batch/qiita" },
-    { "src": "/api/batch/qiita", "dest": "/api/batch/qiita" },
+    { "src": "/api/batch/zenn", "dest": "/api/batch/zenn" },
     { "src": "/api/migration", "dest": "/api/migration" }
   ]
 }
