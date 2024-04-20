@@ -10,6 +10,7 @@
     { "src": "/api/signup", "dest": "/api/signup" },
     { "src": "/api/signin", "dest": "/api/signin" },
     { "src": "/api/signout", "dest": "/api/signout" },
-    { "src": "/api/bookmark", "dest": "/api/bookmark" }
+    { "src": "/api/bookmark", "dest": "/api/bookmark" },
+    { "src": "/api/batch", "dest": "/api/batch" }
   ]
 }
