@@ -43,7 +43,7 @@ func RunQiitaAPIBatch(db *gorm.DB) {
 
 // Qiita APIから記事を取得する
 func GetQiitaArticleFromAPI(jsonData *[]model.QiitaResponse) error {
-	res, err := http.Get(`https://qiita.com/api/v2/items?page=1&per_page=5`)
+	res, err := http.Get(`https://qiita.com/api/v2/items?page=1&per_page=10`)
 	if err != nil {
 		return err
 	}
