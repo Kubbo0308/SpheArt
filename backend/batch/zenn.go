@@ -25,7 +25,7 @@ func RunZennAPIBatch(db *gorm.DB) {
 	for _, item := range articles {
 		var existArticle model.Article
 
-		if err := db.Where("id = ?", item.ID).First(&existArticle).Error; err != nil {
+		if err := db.Where("url = ?", item.Url).First(&existArticle).Error; err != nil {
 			// データベースに存在していないデータのみ保存
 			if err == gorm.ErrRecordNotFound {
 				if err = db.Create(&item).Error; err != nil {
