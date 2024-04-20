@@ -9,15 +9,22 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	db := database.NewPostgreSQLDB()
-	defer database.CloseDB(db)
-	ap := persistence.NewBookmarkPersistence(db)
-	au := usecase.NewBookmarkUsecase(ap)
-	ah := handler.NewBookmarkHandler(au)
 	switch r.Method {
 	case http.MethodGet:
+		db := database.NewPostgreSQLDB()
+		defer database.CloseDB(db)
+		ap := persistence.NewBookmarkPersistence(db)
+		au := usecase.NewBookmarkUsecase(ap)
+		ah := handler.NewBookmarkHandler(au)
 		ah.BookmarkPerPage(w, r)
 	case http.MethodPost:
+		db := database.NewPostgreSQLDB()
+		defer database.CloseDB(db)
+		ap := persistence.NewBookmarkPersistence(db)
+		au := usecase.NewBookmarkUsecase(ap)
+		ah := handler.NewBookmarkHandler(au)
 		ah.PostBookmark(w, r)
+	default:
+		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
 }

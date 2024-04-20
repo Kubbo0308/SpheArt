@@ -9,10 +9,15 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	db := database.NewPostgreSQLDB()
-	defer database.CloseDB(db)
-	ap := persistence.NewUserPersistence(db)
-	au := usecase.NewUserUsecase(ap)
-	ah := handler.NewUserHandler(au)
-	ah.SignUp(w, r)
+	switch r.Method {
+	case http.MethodPost:
+		db := database.NewPostgreSQLDB()
+		defer database.CloseDB(db)
+		ap := persistence.NewUserPersistence(db)
+		au := usecase.NewUserUsecase(ap)
+		ah := handler.NewUserHandler(au)
+		ah.SignUp(w, r)
+	default:
+		w.WriteHeader(http.StatusMethodNotAllowed)
+	}
 }
