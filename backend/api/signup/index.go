@@ -10,7 +10,7 @@ import (
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
-	case http.MethodPost:
+	case http.MethodOptions:
 		db := database.NewPostgreSQLDB()
 		defer database.CloseDB(db)
 		ap := persistence.NewUserPersistence(db)
