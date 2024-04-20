@@ -9,10 +9,15 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	db := database.NewPostgreSQLDB()
-	defer database.CloseDB(db)
-	ap := persistence.NewArticlePersistence(db)
-	au := usecase.NewArticleUsecase(ap)
-	ah := handler.NewArticleHandler(au)
-	ah.ArticlesPerPage(w, r)
+	switch r.Method {
+	case http.MethodGet:
+		db := database.NewPostgreSQLDB()
+		defer database.CloseDB(db)
+		ap := persistence.NewArticlePersistence(db)
+		au := usecase.NewArticleUsecase(ap)
+		ah := handler.NewArticleHandler(au)
+		ah.ArticlesPerPage(w, r)
+	default:
+		w.WriteHeader(http.StatusMethodNotAllowed)
+	}
 }
