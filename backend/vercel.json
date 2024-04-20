@@ -14,5 +14,10 @@
     { "src": "/api/batch/qiita", "dest": "/api/batch/qiita" },
     { "src": "/api/batch/zenn", "dest": "/api/batch/zenn" },
     { "src": "/api/migration", "dest": "/api/migration" }
+  ],
+  "headers": [
+    { "key": "Access-Control-Allow-Origin", "value": "https://spheart.vercel.app" },
+    { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
+    { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
   ]
 }
