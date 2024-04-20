@@ -42,7 +42,7 @@ func RunZennAPIBatch(db *gorm.DB) {
 
 // Zenn APIから記事を取得する
 func GetZennArticleFromAPI(jsonData *model.ZennResponse) error {
-	res, err := http.Get(`https://zenn.dev/api/articles?page=1&per_page=3`)
+	res, err := http.Get(`https://zenn.dev/api/articles?page=1&per_page=2`)
 	if err != nil {
 		return err
 	}
