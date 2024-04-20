@@ -17,7 +17,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		au := usecase.NewBookmarkUsecase(ap)
 		ah := handler.NewBookmarkHandler(au)
 		ah.BookmarkPerPage(w, r)
-	case http.MethodPost:
+	case http.MethodOptions:
 		db := database.NewPostgreSQLDB()
 		defer database.CloseDB(db)
 		ap := persistence.NewBookmarkPersistence(db)
