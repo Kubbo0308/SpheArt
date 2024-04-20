@@ -11,6 +11,8 @@
     { "src": "/api/signin", "dest": "/api/signin" },
     { "src": "/api/signout", "dest": "/api/signout" },
     { "src": "/api/bookmark", "dest": "/api/bookmark" },
-    { "src": "/api/batch", "dest": "/api/batch" }
+    { "src": "/api/batch/qiita", "dest": "/api/batch/qiita" },
+    { "src": "/api/batch/qiita", "dest": "/api/batch/qiita" },
+    { "src": "/api/migration", "dest": "/api/migration" }
   ]
 }
