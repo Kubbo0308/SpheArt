@@ -1,5 +1,5 @@
 export const CONST = {
-  API_BASE_PATH: "http://localhost:8080",
+  API_BASE_PATH: process.env.NEXT_PUBLIC_ENV === "prod" ? process.env.API_URL : process.env.NEXT_PUBLIC_API_URL,
   TOP: "/",
   CSRF_TOKEN: "/csrf",
   ARTICLES: "/articles",
@@ -8,7 +8,9 @@ export const CONST = {
   SIGN_UP: "/signup",
   SIGN_IN: "/signin",
   SIGN_OUT: "/signout",
-  BOOKMARK: "/bookmark"
+  BOOKMARK: "/bookmark",
+  QIITA_BATCH: "/batch/qiita",
+  ZENN_BATCH: "/batch/zenn"
 }
 
 export const STATUS_CODE = {
