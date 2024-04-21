@@ -69,7 +69,7 @@ export const useSignUpPage = (): returnValue => {
     const { email, password } = params
     const { status } = await SignUp(email, password)
     switch (status) {
-      case STATUS_CODE.CREATED:
+      case STATUS_CODE.OK:
         // 新規登録成功時
         alert('新規登録完了！')
         const { status } = await SignIn(email, password)
