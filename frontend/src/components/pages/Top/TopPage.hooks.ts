@@ -1,4 +1,3 @@
-import { getArticles } from "@/api/article"
 import { ArticleProps } from "@/components/molecules/ArticleCard/ArticleCard"
 import { STATUS_CODE } from "@/const"
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react"
@@ -34,14 +33,14 @@ export const useTopPageHooks = (): returnValue => {
             }
             setArticles((prev) => [...prev, ...result.data])
             break // 成功時の処理が完了したらbreakを忘れずに
-            default:
-              alert(status)
-              break
-            }
-          } else {
-            alert(response.statusText);
-          }
+          default:
+            alert(result.status)
+            break
         }
+      } else {
+        alert(response.statusText);
+      }
+    }
     fetchData()
   }, [offset])
 

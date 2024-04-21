@@ -4,7 +4,7 @@ export const CONST = {
   TOP: "/",
   CSRF_TOKEN: "/csrf",
   ARTICLES: "/articles",
-  SEARCH_ARTICLES_IN_TITLE: "/articles/search?title=",
+  SEARCH: "/search",
   AUTH: "/auth",
   SIGN_UP: "/signup",
   SIGN_IN: "/signin",
