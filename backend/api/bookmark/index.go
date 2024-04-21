@@ -9,6 +9,12 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
+	// OPTIONSリクエストへの対応
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
 	switch r.Method {
 	case http.MethodGet:
 		db := database.NewPostgreSQLDB()
@@ -17,7 +23,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		au := usecase.NewBookmarkUsecase(ap)
 		ah := handler.NewBookmarkHandler(au)
 		ah.BookmarkPerPage(w, r)
-	case http.MethodOptions:
+	case http.MethodPost:
 		db := database.NewPostgreSQLDB()
 		defer database.CloseDB(db)
 		ap := persistence.NewBookmarkPersistence(db)

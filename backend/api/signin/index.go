@@ -9,8 +9,14 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
+	// OPTIONSリクエストへの対応
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
 	switch r.Method {
-	case http.MethodOptions:
+	case http.MethodPost:
 		db := database.NewPostgreSQLDB()
 		defer database.CloseDB(db)
 		ap := persistence.NewUserPersistence(db)
