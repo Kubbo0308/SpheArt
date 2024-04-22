@@ -1,9 +1,10 @@
 export const CONST = {
   API_BASE_PATH: process.env.NEXT_PUBLIC_ENV === "prod" ? process.env.API_URL : process.env.NEXT_PUBLIC_API_URL,
+  URL: "http://backend:8080",
   TOP: "/",
   CSRF_TOKEN: "/csrf",
   ARTICLES: "/articles",
-  SEARCH_ARTICLES_IN_TITLE: "/articles/search?title=",
+  SEARCH: "/search",
   AUTH: "/auth",
   SIGN_UP: "/signup",
   SIGN_IN: "/signin",
