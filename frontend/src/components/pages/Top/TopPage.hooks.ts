@@ -1,4 +1,3 @@
-import { getArticles } from "@/api/article"
 import { ArticleProps } from "@/components/molecules/ArticleCard/ArticleCard"
 import { STATUS_CODE } from "@/const"
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react"
@@ -24,20 +23,24 @@ export const useTopPageHooks = (): returnValue => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, status } = await getArticles(offset)
-      switch (status) {
-        case STATUS_CODE.OK:
-          if (data.length === 0) {
-            setIsVisible(false)
-          }
-          setArticles((prev) => [...prev, ...data])
-          break // 成功時の処理が完了したらbreakを忘れずに
-        default:
-          alert(status)
-          break
+      const response = await fetch(`http://localhost:3000/api/articles?per_page=${offset}`)
+      if (response.ok) {
+        const result = await response.json()
+        switch (result.status) {
+          case STATUS_CODE.OK:
+            if (result.data.length === 0) {
+              setIsVisible(false)
+            }
+            setArticles((prev) => [...prev, ...result.data])
+            break // 成功時の処理が完了したらbreakを忘れずに
+          default:
+            alert(result.status)
+            break
+        }
+      } else {
+        alert(response.statusText);
       }
     }
-
     fetchData()
   }, [offset])
 
