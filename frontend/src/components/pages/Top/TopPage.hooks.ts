@@ -23,7 +23,7 @@ export const useTopPageHooks = (): returnValue => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:3000/api/articles?per_page=${offset}`)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/articles?per_page=${offset}`)
       if (response.ok) {
         const result = await response.json()
         switch (result.status) {
