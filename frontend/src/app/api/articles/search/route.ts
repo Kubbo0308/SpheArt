@@ -1,7 +1,7 @@
 import { CONST } from "@/const"
 
-export async function GET(reqest: Request) {
-  const { searchParams } = new URL(reqest.url)
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
   const title = searchParams.get('title')
   const per_page = searchParams.get('per_page')
 
