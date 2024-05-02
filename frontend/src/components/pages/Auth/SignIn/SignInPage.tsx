@@ -4,7 +4,7 @@ import { FormProvider } from 'react-hook-form'
 import { Box, Button, Container, Divider, Flex, Link, Text } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { FormInput } from '@/components/atoms/FormInput'
-import { useSignInPage } from './SingInPage.hooks'
+import { useSignInPage } from './SignInPage.hooks'
 import { CONST } from '@/const'
 
 export const SignInPage = () => {
