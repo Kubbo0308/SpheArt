@@ -1,5 +1,5 @@
 import { ArticleProps } from "@/components/molecules/ArticleCard/ArticleCard"
-import { STATUS_CODE } from "@/const"
+import { CONST, STATUS_CODE } from "@/const"
 import { useSearchParams } from "next/navigation"
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react"
 
@@ -26,7 +26,7 @@ export const useSearchPageHooks = (): returnValue => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/articles/search?title=${title}&per_page=${offset}`)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${CONST.ARTICLES}/search?title=${title}&per_page=${offset}`)
       if (response.ok) {
         const result = await response.json()
         switch (result.status) {

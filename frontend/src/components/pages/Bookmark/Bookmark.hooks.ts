@@ -1,4 +1,3 @@
-import { GetBookmark } from "@/api/bookmark"
 import { ArticleProps } from "@/components/molecules/ArticleCard/ArticleCard"
 import { CONST, STATUS_CODE } from "@/const"
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react"
@@ -24,7 +23,7 @@ export const useBookmarkPageHooks = (): returnValue => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/${CONST.BOOKMARK}?per_page=${offset}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${CONST.BOOKMARK}?per_page=${offset}`, {
         method: 'GET',
         credentials: "include", // Cookieを含める
       })
