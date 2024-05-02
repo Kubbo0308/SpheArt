@@ -57,7 +57,7 @@ export const useSignInPage = (): returnValue => {
 
   const onSubmit = async (params: SignInFormType) => {
     const { email, password } = params
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/signin`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${CONST.AUTH}${CONST.SIGN_IN}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
