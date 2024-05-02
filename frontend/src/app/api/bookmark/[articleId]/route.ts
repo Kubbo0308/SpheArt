@@ -1,8 +1,10 @@
-import { CONST } from "@/const"
+import { CONST } from "@/const";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
-  const per_page = searchParams.get('per_page')
+export async function POST(
+  request: Request,
+  { params }: { params: { articleId: string } }
+) {
+  const articleId = params.articleId
   // クライアントからのリクエストヘッダーからCookieを取得
   const clientCookies = request.headers.get('cookie');
   // headersオブジェクトを定義し、Cookieがnullでない場合のみCookieヘッダーを設定
@@ -13,11 +15,10 @@ export async function GET(request: Request) {
     headers.Cookie = clientCookies; // Cookieがnullでなければヘッダーに追加
   }
 
-  const res = await fetch(`${process.env.API_URL}/api${CONST.BOOKMARK}?per_page=${per_page}`,
+  const res = await fetch(`${process.env.API_URL}/api${CONST.BOOKMARK}/${articleId}`,
   {
-    method: "GET",
+    method: "POST",
     headers: headers,
-    cache: 'no-cache',
     credentials: "include", // Cookieを含める
   })
   const data = await res.json()
