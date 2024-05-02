@@ -1,6 +1,5 @@
-import { GetBookmark } from "@/api/bookmark"
 import { ArticleProps } from "@/components/molecules/ArticleCard/ArticleCard"
-import { STATUS_CODE } from "@/const"
+import { CONST, STATUS_CODE } from "@/const"
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react"
 
 interface returnValue {
@@ -24,18 +23,24 @@ export const useBookmarkPageHooks = (): returnValue => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, status } = await GetBookmark(offset)
-      switch (status) {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${CONST.BOOKMARK}?per_page=${offset}`, {
+        method: 'GET',
+        credentials: "include", // Cookieを含める
+      })
+      if (response.ok) {
+        const result = await response.json()
+        switch (result.status) {
         case STATUS_CODE.OK:
-          if (data.length === 0) {
+          if (result.data.length === 0) {
             setIsVisible(false)
           }
-          setArticles((prev) => [...prev, ...data])
+          setArticles((prev) => [...prev, ...result.data])
           break // 成功時の処理が完了したらbreakを忘れずに
         default:
-          alert(status)
+          alert(result.status)
           break
       }
+    }
     }
 
     fetchData()

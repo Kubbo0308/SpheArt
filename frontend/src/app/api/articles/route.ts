@@ -1,7 +1,7 @@
 import { CONST } from "@/const"
 
-export async function GET(reqest: Request) {
-  const { searchParams } = new URL(reqest.url)
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
   const per_page = searchParams.get('per_page')
 
   const res = await fetch(`${process.env.API_URL}/api${CONST.ARTICLES}?per_page=${per_page}`, { next: { revalidate: 43200 } })

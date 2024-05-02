@@ -1,6 +1,5 @@
 import { FieldErrors, useForm, UseFormHandleSubmit, UseFormRegister, UseFormReturn, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SignIn, SignUp } from '@/api/user'
 import { CONST, STATUS_CODE } from '@/const'
 import { SignUpFormSchema, SignUpFormType } from '@/schemas/SignUpFormSchema'
 import { useRouter } from 'next/navigation'
@@ -67,13 +66,36 @@ export const useSignUpPage = (): returnValue => {
 
   const onSubmit = async (params: SignUpFormType) => {
     const { email, password } = params
-    const { status } = await SignUp(email, password)
-    switch (status) {
-      case STATUS_CODE.OK:
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${CONST.AUTH}${CONST.SIGN_UP}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      }),
+    })
+    if (response.ok) {
+      const result = await response.json();
+      switch (result.status) {
+      case STATUS_CODE.CREATED:
         // 新規登録成功時
         alert('新規登録完了！')
-        const { status } = await SignIn(email, password)
-        switch (status) {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${CONST.AUTH}${CONST.SIGN_IN}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password
+          }),
+          credentials: "include", // Cookieを含める
+        })
+        if (response.ok) {
+          const result = await response.json();
+          switch (result.status) {
           case STATUS_CODE.OK:
             router.push(CONST.TOP)
             window.location.reload()
@@ -81,6 +103,7 @@ export const useSignUpPage = (): returnValue => {
           default:
             break
         }
+      }
         break
       case STATUS_CODE.CONFLICT:
         alert('このメールアドレスは既に存在しています😭')
@@ -89,6 +112,7 @@ export const useSignUpPage = (): returnValue => {
         alert('失敗！')
         break
     }
+  }
   }
 
   return { methods, handleSubmit, onSubmit, register, errors, isDisabled }
