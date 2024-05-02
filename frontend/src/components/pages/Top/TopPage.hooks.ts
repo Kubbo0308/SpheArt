@@ -1,5 +1,5 @@
 import { ArticleProps } from "@/components/molecules/ArticleCard/ArticleCard"
-import { STATUS_CODE } from "@/const"
+import { CONST, STATUS_CODE } from "@/const"
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react"
 
 interface returnValue {
@@ -23,7 +23,7 @@ export const useTopPageHooks = (): returnValue => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/articles?per_page=${offset}`)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api${CONST.ARTICLES}?per_page=${offset}`)
       if (response.ok) {
         const result = await response.json()
         switch (result.status) {
