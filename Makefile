@@ -23,11 +23,11 @@ restart:
 
 .PHONY: up-frontend
 up-frontend:
-	docker compose up -d $(FRONTEND_CONTAINER)
+	docker compose up -d ${FRONTEND_CONTAINER}
 
 .PHONY: up-backend
 up-backend:
-	docker compose up -d $(BACKEND_CONTAINER)
+	docker compose up -d ${BACKEND_CONTAINER}
 
 generate-mock-data-for-test: up-backend
-	.scripts/generate-mock-data-for-test.sh $(BACKEND_CONTAINER)
+	.scripts/generate-mock-data-for-test.sh ${BACKEND_CONTAINER}
