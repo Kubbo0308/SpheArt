@@ -2,7 +2,7 @@ package batch
 
 import (
 	"backend/domain/model"
-	"backend/utils"
+	"backend/domain/utils"
 	"encoding/json"
 	"fmt"
 	"io"
