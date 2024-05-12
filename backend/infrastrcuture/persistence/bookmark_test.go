@@ -130,7 +130,7 @@ func TestBookmarkPersistence_AllBookmarkedArticleByUserId(t *testing.T) {
 				regexp.QuoteMeta(
 					"SELECT `articles`.`id`,`articles`.`title`,`articles`.`url`,`articles`.`ogp_image_url`,`articles`." +
 						"`created_at`,`articles`.`updated_at`,`articles`.`publisher_id`,`articles`.`publisher_name`," +
-						"`articles`.`publisher_image_url`,`articles`.`likes_count`,`articles`.`quote_source` FROM `articles `" +
+						"`articles`.`publisher_image_url`,`articles`.`likes_count`,`articles`.`quote_source` FROM `articles` " +
 						"INNER JOIN bookmarks ON articles.id = bookmarks.article_id WHERE bookmarks.user_id = ?",
 				)).WithArgs(userId).WillReturnRows(rows)
 
