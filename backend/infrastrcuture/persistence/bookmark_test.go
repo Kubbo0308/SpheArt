@@ -3,6 +3,7 @@ package persistence
 import (
 	"backend/domain/model"
 	"backend/testutils"
+	"errors"
 	"regexp"
 	"testing"
 	"time"
@@ -128,6 +129,59 @@ func TestBookmarkPersistence_PostBookmark(t *testing.T) {
 			bp := NewBookmarkPersistence(db)
 			bookmark := model.Bookmark{}
 			err = bp.PostBookmark(&bookmark)
+
+			assert.Error(t, err)
+		},
+	)
+	t.Run(
+		"異常系： ブックマークが作成できなかった場合",
+		func(t *testing.T) {
+			db, mock, err := testutils.NewDBMock()
+			assert.NoError(t, err)
+
+			bookmark := &model.Bookmark{UserID: 1, ArticleID: "2"}
+
+			// ブックマークが存在しないことを模擬
+			mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `bookmarks` WHERE user_id = ? AND article_id = ? ORDER BY `bookmarks`.`id`  LIMIT ?")).
+				WithArgs(bookmark.UserID, bookmark.ArticleID, 1).
+				WillReturnError(gorm.ErrRecordNotFound)
+
+			// ブックマークの作成が失敗することを期待
+			mock.ExpectBegin()
+			mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `bookmarks` (`user_id`,`article_id`) VALUES (?,?)")).
+				WithArgs(bookmark.UserID, bookmark.ArticleID).
+				WillReturnError(errors.New("error"))
+			mock.ExpectCommit()
+
+			bp := NewBookmarkPersistence(db)
+			err = bp.PostBookmark(bookmark)
+
+			assert.Error(t, err)
+		},
+	)
+	t.Run(
+		"異常系： ブックマークが削除できなかった場合",
+		func(t *testing.T) {
+			db, mock, err := testutils.NewDBMock()
+			assert.NoError(t, err)
+
+			bookmark := &model.Bookmark{UserID: 1, ArticleID: "2"}
+			rows := sqlmock.NewRows([]string{"id", "user_id", "article_id"}).AddRow(1, bookmark.UserID, bookmark.ArticleID)
+
+			// ブックマークが存在しないことを模擬
+			mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `bookmarks` WHERE user_id = ? AND article_id = ? ORDER BY `bookmarks`.`id`  LIMIT ?")).
+				WithArgs(bookmark.UserID, bookmark.ArticleID, 1).
+				WillReturnRows(rows)
+
+			// ブックマークの作成を期待
+			mock.ExpectBegin()
+			mock.ExpectExec(regexp.QuoteMeta("DELETE FROM `bookmarks` WHERE `bookmarks`.`id` = ?")).
+				WithArgs(1).
+				WillReturnError(errors.New("error"))
+			mock.ExpectCommit()
+
+			bp := NewBookmarkPersistence(db)
+			err = bp.PostBookmark(bookmark)
 
 			assert.Error(t, err)
 		},
