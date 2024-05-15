@@ -32,7 +32,7 @@ func TestArticleUsecase_ArticlesPerPage(t *testing.T) {
 		},
 	)
 	t.Run(
-		"異常系： データが取得できなかった場合",
+		"正常系： データが取得できた場合",
 		func(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
@@ -86,7 +86,7 @@ func TestArticleUsecase_AllArticles(t *testing.T) {
 		},
 	)
 	t.Run(
-		"異常系： データが取得できなかった場合",
+		"正常系： データが取得できた場合",
 		func(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
@@ -140,7 +140,7 @@ func TestArticleUsecase_SearchInArticleTitle(t *testing.T) {
 		},
 	)
 	t.Run(
-		"異常系： データが取得できなかった場合",
+		"正常系： データが取得できた場合",
 		func(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
