@@ -50,10 +50,10 @@ func (mr *MockUserUsecaseMockRecorder) SignIn(user interface{}) *gomock.Call {
 }
 
 // SignUp mocks base method.
-func (m *MockUserUsecase) SignUp(user model.User) (model.UserResponse, error) {
+func (m *MockUserUsecase) SignUp(user model.User) (*model.UserResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SignUp", user)
-	ret0, _ := ret[0].(model.UserResponse)
+	ret0, _ := ret[0].(*model.UserResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
