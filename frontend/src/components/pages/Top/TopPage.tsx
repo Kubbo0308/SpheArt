@@ -5,6 +5,7 @@ import { Box, Container, Text } from '@chakra-ui/react'
 import { useTopPageHooks } from './TopPage.hooks'
 import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import { Loading } from '@/components/molecules/Loading'
+import { NoArticle } from '@/components/atoms/NoArticle'
 
 interface TopPageProps {
   token: RequestCookie | undefined
@@ -20,6 +21,7 @@ export const TopPage = (props: TopPageProps) => {
       </Text>
       <Container maxW="container.md" py="5%">
         <ArticleList articles={articles} token={token} />
+        {articles.length === 0 && <NoArticle />}
         <Box ref={loader} h="1px" mt="19px" />
         {isVisible && <Loading />}
       </Container>
