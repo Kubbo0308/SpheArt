@@ -5,6 +5,7 @@ import { Box, Container, Text } from '@chakra-ui/react'
 import { useBookmarkPageHooks } from './Bookmark.hooks'
 import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import { Loading } from '@/components/molecules/Loading'
+import { NoArticle } from '@/components/atoms/NoArticle'
 
 interface BookmarkPageProps {
   token: RequestCookie | undefined
@@ -20,6 +21,7 @@ export const BookmarkPage = (props: BookmarkPageProps) => {
       </Text>
       <Container maxW="container.md" py="5%">
         <ArticleList articles={articles} token={token} isBookmarkPage={true} />
+        {articles.length === 0 && <NoArticle />}
         <Box ref={loader} h="1px" mt="19px" />
         {isVisible && <Loading />}
       </Container>
