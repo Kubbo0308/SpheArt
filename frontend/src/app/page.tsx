@@ -1,4 +1,4 @@
-import { runQiitaBatch, runZennBatch } from '@/api/batch'
+import { runQiitaBatch } from '@/api/batch'
 import { TopPage } from '@/components/pages/Top/TopPage'
 import { cookies } from 'next/headers'
 

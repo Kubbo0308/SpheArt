@@ -13,7 +13,7 @@ export const Header = () => {
           <Link href={CONST.TOP}>
             <Flex gap="5px" h="100%" alignItems="center">
               <Image
-                src="/icons/SpheArt.svg"
+                src="/icons/spheart.svg"
                 alt="#"
                 w="100%"
                 h="100%"
