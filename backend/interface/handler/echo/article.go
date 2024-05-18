@@ -33,7 +33,7 @@ func (ah *articleHandler) ArticlesPerPage(ctx echo.Context) error {
 
 	res, err := ah.au.ArticlesPerPage(perPage)
 	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, err.Error())
+		return ctx.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 	return ctx.JSON(http.StatusOK, res)
 }
@@ -41,7 +41,7 @@ func (ah *articleHandler) ArticlesPerPage(ctx echo.Context) error {
 func (ah *articleHandler) AllArticles(ctx echo.Context) error {
 	res, err := ah.au.AllArticles()
 	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, err.Error())
+		return ctx.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 	return ctx.JSON(http.StatusOK, res)
 }
@@ -60,7 +60,7 @@ func (ah *articleHandler) SearchInArticleTitle(ctx echo.Context) error {
 
 	res, err := ah.au.SearchInArticleTitle(searchTitle, perPage)
 	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, err.Error())
+		return ctx.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 	return ctx.JSON(http.StatusOK, res)
 }
