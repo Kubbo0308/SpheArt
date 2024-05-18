@@ -38,7 +38,7 @@ func (bh *bookmarkHandler) BookmarkPerPage(ctx echo.Context) error {
 
 	res, err := bh.bu.BookmarkedArticlePerPage(uint(userId.(float64)), perPage)
 	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, err.Error())
+		return ctx.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 	return ctx.JSON(http.StatusOK, res)
 }
@@ -50,7 +50,7 @@ func (bh *bookmarkHandler) AllBookmark(ctx echo.Context) error {
 
 	res, err := bh.bu.AllBookmarkedArticle(uint(userId.(float64)))
 	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, err.Error())
+		return ctx.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 	return ctx.JSON(http.StatusOK, res)
 }
@@ -64,7 +64,7 @@ func (bh *bookmarkHandler) PostBookmark(ctx echo.Context) error {
 
 	res, err := bh.bu.PostBookmark(uint(userId.(float64)), articleId)
 	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, err.Error())
+		return ctx.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 	return ctx.JSON(http.StatusOK, res)
 }
