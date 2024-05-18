@@ -76,7 +76,8 @@ func TestUserUsecase_SignUp_Failure(t *testing.T) {
 				patches.ApplyFunc(bcrypt.GenerateFromPassword, func(password []byte, cost int) ([]byte, error) {
 					return []byte{}, nil
 				})
-				ur.EXPECT().UserByEmail(gomock.AssignableToTypeOf(&model.User{}), "test@example.com").Return(errors.New("error")).Times(1)
+				ur.EXPECT().UserByEmail(gomock.AssignableToTypeOf(&model.User{}), "test@example.com").
+					Return(errors.New("error")).Times(1)
 				ur.EXPECT().CreateUser(gomock.Any()).Return(errors.New("error")).Times(1)
 			},
 		},
