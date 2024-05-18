@@ -27,16 +27,16 @@ func NewUserHandler(uu usecase.UserUsecase) UserHandler {
 func (uh *userHandler) SignUp(ctx echo.Context) error {
 	user := model.User{}
 	if err := ctx.Bind(&user); err != nil {
-		return ctx.JSON(http.StatusBadRequest, err.Error())
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
 	res, err := uh.uu.SignUp(user)
 	if err != nil {
 		// 既に存在するユーザーである場合のエラー
 		if err == model.ErrUserAlreadyExists { // ErrUserAlreadyExists はユーザーが既に存在するときのエラー
-			return ctx.JSON(http.StatusConflict, err.Error())
+			return ctx.JSON(http.StatusConflict, map[string]string{"error": err.Error()})
 		}
 		// その他のエラー
-		return ctx.JSON(http.StatusInternalServerError, err.Error())
+		return ctx.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 	return ctx.JSON(http.StatusCreated, res)
 }
@@ -44,16 +44,16 @@ func (uh *userHandler) SignUp(ctx echo.Context) error {
 func (uh *userHandler) SignIn(ctx echo.Context) error {
 	user := model.User{}
 	if err := ctx.Bind(&user); err != nil {
-		return ctx.JSON(http.StatusBadRequest, err.Error())
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
 	tokenString, err := uh.uu.SignIn(user)
 	if err != nil {
 		// 認証失敗エラー
 		if err == model.ErrAuthenticationFailure {
-			return ctx.JSON(http.StatusUnauthorized, err.Error())
+			return ctx.JSON(http.StatusUnauthorized, map[string]string{"error": err.Error()})
 		}
 		// その他の内部エラー
-		return ctx.JSON(http.StatusInternalServerError, err.Error())
+		return ctx.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 	cookie := new(http.Cookie)
 	cookie.Name = "token"
