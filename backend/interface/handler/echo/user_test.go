@@ -35,7 +35,9 @@ func TestUserHandler_SignUp(t *testing.T) {
 
 			if assert.NoError(t, userHandler.SignUp(ctx)) {
 				assert.Equal(t, http.StatusBadRequest, rec.Code)
-				assert.JSONEq(t, `{"error":"code=400, message=Syntax error: offset=1, error=invalid character 'i' looking for beginning of value, internal=invalid character 'i' looking for beginning of value"}`, rec.Body.String())
+				assert.JSONEq(t, `{"error":"code=400, message=Syntax error: offset=1, error=invalid character 'i' `+
+					`looking for beginning of value, internal=invalid character 'i' looking for beginning of value"}`,
+					rec.Body.String())
 			}
 		},
 	)
@@ -156,7 +158,9 @@ func TestUserHandler_SignIn(t *testing.T) {
 
 			if assert.NoError(t, userHandler.SignIn(ctx)) {
 				assert.Equal(t, http.StatusBadRequest, rec.Code)
-				assert.JSONEq(t, `{"error":"code=400, message=Syntax error: offset=1, error=invalid character 'i' looking for beginning of value, internal=invalid character 'i' looking for beginning of value"}`, rec.Body.String())
+				assert.JSONEq(t, `{"error":"code=400, message=Syntax error: offset=1, error=invalid character 'i' `+
+					`looking for beginning of value, internal=invalid character 'i' looking for beginning of value"}`,
+					rec.Body.String())
 			}
 		},
 	)

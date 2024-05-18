@@ -98,7 +98,8 @@ func TestUserPersistence_UserByEmail(t *testing.T) {
 				AddRow(mockUser.ID, mockUser.Email, mockUser.Password, mockUser.CreatedAt, mockUser.UpdatedAt)
 
 			mock.ExpectQuery(
-				regexp.QuoteMeta("SELECT * FROM `users` WHERE email=? ORDER BY `users`.`id` LIMIT ?")).WithArgs(email, 1).WillReturnRows(rows)
+				regexp.QuoteMeta("SELECT * FROM `users` WHERE email=? ORDER BY `users`.`id` LIMIT ?"),
+			).WithArgs(email, 1).WillReturnRows(rows)
 
 			up := NewUserPersistence(db)
 			user := &model.User{}
