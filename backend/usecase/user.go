@@ -13,7 +13,7 @@ import (
 )
 
 type UserUsecase interface {
-	SignUp(user model.User) (model.UserResponse, error)
+	SignUp(user model.User) (*model.UserResponse, error)
 	SignIn(user model.User) (string, error)
 }
 
@@ -25,25 +25,25 @@ func NewUserUsecase(ur repository.UserRepository) UserUsecase {
 	return &userUsecase{ur}
 }
 
-func (uu *userUsecase) SignUp(user model.User) (model.UserResponse, error) {
+func (uu *userUsecase) SignUp(user model.User) (*model.UserResponse, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
 	if err != nil {
-		return model.UserResponse{}, err
+		return nil, err
 	}
 	// 既に同じメールアドレスを持つユーザーが存在するかチェック
 	existingUser := model.User{}
 	if err := uu.ur.UserByEmail(&existingUser, user.Email); err == nil {
-		return model.UserResponse{}, model.ErrUserAlreadyExists
+		return nil, model.ErrUserAlreadyExists
 	}
 	newUser := model.User{Email: user.Email, Password: string(hash)}
 	if err := uu.ur.CreateUser(&newUser); err != nil {
-		return model.UserResponse{}, err
+		return nil, err
 	}
 	resUser := model.UserResponse{
 		ID:    newUser.ID,
 		Email: newUser.Email,
 	}
-	return resUser, nil
+	return &resUser, nil
 }
 
 func (uu *userUsecase) SignIn(user model.User) (string, error) {
