@@ -21,7 +21,7 @@ export const BookmarkPage = (props: BookmarkPageProps) => {
       </Text>
       <Container maxW="container.md" py="5%">
         <ArticleList articles={articles} token={token} isBookmarkPage={true} />
-        {articles.length === 0 && <NoArticle />}
+        {!isVisible && articles.length === 0 && <NoArticle />}
         <Box ref={loader} h="1px" mt="19px" />
         {isVisible && <Loading />}
       </Container>
