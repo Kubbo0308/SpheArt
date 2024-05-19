@@ -8,12 +8,12 @@ import { AuthButton } from '@/components/molecules/AuthButton/AuthButton'
 export const Header = () => {
   return (
     <Box bg="white.primary">
-      <Flex maxW="768px" alignItems="center" w="100%" h="7vh" mx="auto">
+      <Flex maxW="768px" alignItems="center" w="100%" h="50px" mx="auto">
         <Flex justifyContent="space-between" h="80%" px="3%" w="100%">
           <Link href={CONST.TOP}>
             <Flex gap="5px" h="100%" alignItems="center">
               <Image
-                src="/icons/spheart.svg"
+                src="/icons/spheart_color.svg"
                 alt="#"
                 w="100%"
                 h="100%"
