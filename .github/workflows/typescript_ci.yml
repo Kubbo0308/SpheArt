@@ -15,9 +15,9 @@ env:
   DOCKER_IMAGE_TAG: "frontend"
 
 # デフォルトの作業ディレクトリ変更
-# defaults:
-#   run:
-#     working-directory: frontend
+defaults:
+  run:
+    working-directory: frontend
 
 # ジョブ定義
 jobs:
@@ -57,7 +57,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
           eslint_flags: "src/**/*.{ts,tsx}"
-          workdir: frontend/
+          # workdir: frontend/
 
   typescript_build_check:
     runs-on: ubuntu-latest
